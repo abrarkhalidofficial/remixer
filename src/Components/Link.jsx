@@ -1,3 +1,4 @@
+import React from "react";
 import PropTypes from "prop-types";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
@@ -18,9 +19,10 @@ export const Link = ({ children, to, prefetch = true, ...props }) => {
   const [prefetched, setPrefetched] = useState(false);
 
   const route = useMemo(() => getMatchingRoute(to), [to]);
-  const preload = useCallback(() => route?.preload() && setPrefetched(true), [
-    route,
-  ]);
+  const preload = useCallback(
+    () => route?.preload() && setPrefetched(true),
+    [route]
+  );
   const prefetchable = Boolean(route && !prefetched);
 
   useEffect(() => {

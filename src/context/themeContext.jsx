@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React, { createContext, useEffect } from "react";
 
 const ThemeContext = createContext();
@@ -23,3 +24,7 @@ export default function ThemeProvider({ children }) {
     </ThemeContext.Provider>
   );
 }
+
+ThemeProvider.propTypes = {
+  children: PropTypes.any,
+};
