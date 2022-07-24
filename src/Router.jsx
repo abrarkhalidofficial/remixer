@@ -23,15 +23,15 @@ export const Router = () => {
   const NotFound = preserved?.["404"] || Fragment;
 
   return (
-    <App>
-      <Suspense fallback={<>loading</>}>
+    <Suspense fallback={<>loading</>}>
+      <App>
         <Routes>
           {routes.map(({ path, component: Component = Fragment }) => (
             <Route key={path} path={path} element={<Component />} />
           ))}
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </Suspense>
-    </App>
+      </App>
+    </Suspense>
   );
 };
