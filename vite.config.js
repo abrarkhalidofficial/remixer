@@ -2,7 +2,6 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 import viteCompression from "vite-plugin-compression";
-import removeConsole from "vite-plugin-remove-console";
 import { ViteWebfontDownload } from "vite-plugin-webfont-dl";
 
 export default defineConfig({
@@ -11,7 +10,6 @@ export default defineConfig({
     VitePWA({ injectRegister: "auto" }),
     viteCompression(),
     ViteWebfontDownload(),
-    removeConsole(),
   ],
   esbuild: {
     drop: ["console", "debugger"],

@@ -2282,6 +2282,11 @@ randombytes@^2.1.0:
   dependencies:
     safe-buffer "^5.1.0"
 
+react-critical-css@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-critical-css/-/react-critical-css-2.1.0.tgz#b22bbb9331477619fd56556c51c9d77e4d8c8b31"
+  integrity sha512-iolL/KNwfiYmdsO6oHR2E23S9MTcEdUaMSuPKNCW542mripviZtbm/njFbRSF4oXuBwuAKYUMb6vguhgY3Urtw==
+
 react-dom@^18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.2.0.tgz#22aaf38708db2674ed9ada224ca4aa708d821e3d"
@@ -2744,11 +2749,6 @@ vite-plugin-pwa@^0.12.3:
     rollup "^2.75.7"
     workbox-build "^6.5.3"
     workbox-window "^6.5.3"
-
-vite-plugin-remove-console@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/vite-plugin-remove-console/-/vite-plugin-remove-console-1.1.0.tgz#bb7f00669004d25ac5bb8f45aff97612fef46f41"
-  integrity sha512-FZ0gLEsRqgHPCl+blHpT3h004+InKrGddmBXTfs7Cj/xWY7FdHpL9Zc9kgjxh8zIzjZ/MblsPDDEqg5BVHIXDA==
 
 vite-plugin-webfont-dl@^2.2.0:
   version "2.2.0"
