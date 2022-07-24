@@ -1,6 +1,6 @@
+import PropTypes from "prop-types";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
-
 import { routes } from "../Router";
 
 const getMatchingRoute = (path) => {
@@ -18,10 +18,9 @@ export const Link = ({ children, to, prefetch = true, ...props }) => {
   const [prefetched, setPrefetched] = useState(false);
 
   const route = useMemo(() => getMatchingRoute(to), [to]);
-  const preload = useCallback(
-    () => route?.preload() && setPrefetched(true),
-    [route]
-  );
+  const preload = useCallback(() => route?.preload() && setPrefetched(true), [
+    route,
+  ]);
   const prefetchable = Boolean(route && !prefetched);
 
   useEffect(() => {
@@ -44,4 +43,10 @@ export const Link = ({ children, to, prefetch = true, ...props }) => {
       {children}
     </RouterLink>
   );
+};
+
+Link.propTypes = {
+  children: PropTypes.any,
+  prefetch: PropTypes.bool,
+  to: PropTypes.any,
 };
