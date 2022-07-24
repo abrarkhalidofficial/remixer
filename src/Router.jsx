@@ -9,13 +9,13 @@ const preserved = Object.keys(PRESERVED).reduce((preserved, file) => {
   return { ...preserved, [key]: PRESERVED[file].default };
 }, {});
 
-const routes = Object.keys(ROUTES).map((route) => {
+export const routes = Object.keys(ROUTES).map((route) => {
   const path = route
     .replace(/\/src\/screens|index|\.jsx$/g, "")
     .replace(/\[\.{3}.+\]/, "*")
     .replace(/\[(.+)\]/, ":$1");
 
-  return { path, component: lazy(ROUTES[route]) };
+  return { path, component: lazy(ROUTES[route]), preload: ROUTES[route] };
 });
 
 export const Router = () => {
