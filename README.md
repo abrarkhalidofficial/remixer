@@ -8,11 +8,7 @@ Base react app with file base routing vite as build tool and other small things 
 
 ## Table of Contents
 
--[Instalation](#instalation)
-
 -[Usage](#usage)
-
--[Liscense](#liscense)
 
 -[Contributions](#contributions)
 
