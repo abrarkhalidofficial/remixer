@@ -13,7 +13,4 @@ export default defineConfig({
     ViteWebfontDownload(),
     eslint(),
   ],
-  esbuild: {
-    drop: ["console", "debugger"],
-  },
 });
