@@ -1,6 +1,6 @@
 import React from "react";
 import useSWR from "swr";
-import { Link } from "../Components/Link";
+import { Link } from "../components/Link";
 import { fetcher } from "../utils/fetcher";
 
 export default function about() {

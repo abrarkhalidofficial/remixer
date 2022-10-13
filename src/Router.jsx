@@ -1,6 +1,6 @@
 import React, { Fragment, lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import { Loading } from "../src/Components/Loading";
+import { Loading } from "../src/components/Loading";
 
 const PRESERVED = import.meta.globEager("/src/screens/(_app|404).jsx");
 const ROUTES = import.meta.glob("/src/screens/**/[a-z[]*.jsx");
