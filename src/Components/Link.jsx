@@ -1,20 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, NavLink } from "react-router-dom";
 import { routes } from "../Router";
 
 const getMatchingRoute = (path) => {
-  const routeDynamicSegments = /:\w+|\*/g;
   return routes.find(
     (route) =>
-      path.match(
-        new RegExp(route.path.replace(routeDynamicSegments, ".*"))
-      )?.[0] === path
+      path.match(new RegExp(route.path.replace(/:\w+|\*/g, ".*")))?.[0] === path
   );
 };
 
-export const Link = ({ children, to, prefetch = true, ...props }) => {
+export const Link = ({ children, to, as, prefetch = true, ...props }) => {
   const ref = useRef(null);
   const [prefetched, setPrefetched] = useState(false);
 
@@ -40,7 +37,11 @@ export const Link = ({ children, to, prefetch = true, ...props }) => {
 
   const handleMouseEnter = () => prefetchable && preload();
 
-  return (
+  return as === "NavLink" ? (
+    <NavLink ref={ref} to={to} onMouseEnter={handleMouseEnter} {...props}>
+      {children}
+    </NavLink>
+  ) : (
     <RouterLink ref={ref} to={to} onMouseEnter={handleMouseEnter} {...props}>
       {children}
     </RouterLink>
@@ -51,4 +52,5 @@ Link.propTypes = {
   children: PropTypes.any,
   prefetch: PropTypes.bool,
   to: PropTypes.any,
+  as: PropTypes.oneOf([false, "NavLink"]),
 };

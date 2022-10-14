@@ -12,7 +12,9 @@ export default function about() {
   return (
     <div>
       about
-      <Link to="/">Home</Link>
+      <Link to="/" as="NavLink">
+        Home
+      </Link>
       <ul>
         {data.map((repo) => (
           <li key={repo.id}>{JSON.stringify(repo)}</li>
