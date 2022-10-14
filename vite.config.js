@@ -1,5 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { ViteTips } from "vite-plugin-tips";
+import progress from "vite-plugin-progress";
 import { imagetools } from "vite-imagetools";
 import viteImagemin from "vite-plugin-imagemin";
 import viteCompression from "vite-plugin-compression";
@@ -10,6 +12,8 @@ import { ViteWebfontDownload } from "vite-plugin-webfont-dl";
 export default defineConfig({
   plugins: [
     react(),
+    ViteTips(),
+    progress(),
     ViteWebfontDownload(),
     chunkSplitPlugin(),
     imagetools(),
@@ -19,11 +23,11 @@ export default defineConfig({
     }),
     viteImagemin({
       gifsicle: {
-        optimizationLevel: 7,
+        optimizationLevel: 8,
         interlaced: false,
       },
       optipng: {
-        optimizationLevel: 7,
+        optimizationLevel: 8,
       },
       mozjpeg: {
         quality: 20,
