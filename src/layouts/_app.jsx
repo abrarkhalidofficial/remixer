@@ -2,13 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-
-export default function App({ children }) {
+export default function App({ children, not404 }) {
   return (
     <>
-      <Header />
+      {not404 ? <Header /> : null}
       {children}
-      <Footer />
+      {not404 ? <Footer /> : null}
     </>
   );
 }
