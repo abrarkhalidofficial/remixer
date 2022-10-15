@@ -11,7 +11,6 @@ export default function App({ children }) {
       <Footer />
     </>
   );
-  s;
 }
 
 App.propTypes = {
