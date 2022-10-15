@@ -1,6 +1,5 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import { ViteTips } from "vite-plugin-tips";
 import progress from "vite-plugin-progress";
 import { imagetools } from "vite-imagetools";
 import viteImagemin from "vite-plugin-imagemin";
@@ -12,7 +11,6 @@ import { ViteWebfontDownload } from "vite-plugin-webfont-dl";
 export default defineConfig({
   plugins: [
     react(),
-    ViteTips(),
     progress(),
     ViteWebfontDownload(),
     chunkSplitPlugin(),

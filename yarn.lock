@@ -3924,11 +3924,6 @@ vite-plugin-progress@^0.0.5:
     progress "^2.0.3"
     rd "^2.0.1"
 
-vite-plugin-tips@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/vite-plugin-tips/-/vite-plugin-tips-2.1.0.tgz#b072a83426cc86f60255a2f874a8d6f2a539a5ce"
-  integrity sha512-3REhZT6keCdqroYC9tUwHf2vrQzAoF1YT9mLr8xbJ7S904DX0NKzpK1JtYUacs83x+B+6W3yjX+CKG4/766JWA==
-
 vite-plugin-webfont-dl@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/vite-plugin-webfont-dl/-/vite-plugin-webfont-dl-3.1.1.tgz#48c4635d0f8c8c51f0439fed2451f2fcd9ddb02a"
