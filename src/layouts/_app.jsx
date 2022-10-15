@@ -1,7 +1,7 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+
 export default function App({ children, not404 }) {
   return (
     <>
@@ -11,7 +11,3 @@ export default function App({ children, not404 }) {
     </>
   );
 }
-
-App.propTypes = {
-  children: PropTypes.any,
-};

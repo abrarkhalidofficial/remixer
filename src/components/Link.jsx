@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link as RouterLink, NavLink } from "react-router-dom";
 import { routes } from "../Router";
@@ -46,11 +45,4 @@ export const Link = ({ children, to, as, prefetch = true, ...props }) => {
       {children}
     </RouterLink>
   );
-};
-
-Link.propTypes = {
-  children: PropTypes.any,
-  prefetch: PropTypes.bool,
-  to: PropTypes.any,
-  as: PropTypes.oneOf([false, "NavLink"]),
 };
