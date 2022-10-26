@@ -1,9 +1,12 @@
 import React, { Fragment, lazy, Suspense } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
-import Loading from "./layouts/_loading";
+import { withStyles } from "react-critical-css";
 
-const PRESERVED = import.meta.globEager("/src/layouts/(_app|_notFound).jsx");
+const PRESERVED = import.meta.globEager(
+  "/src/layouts/(_app|_notFound|_loading).jsx"
+);
 const ROUTES = import.meta.glob("/src/screens/**/[a-z[]*.jsx");
+const STYLES = import.meta.globEager("/src/styles/*.scss");
 
 const preserved = Object.keys(PRESERVED).reduce((preserved, file) => {
   const key = file.replace(/\/src\/layouts\/|\.jsx$/g, "");
@@ -22,10 +25,23 @@ export const routes = Object.keys(ROUTES).map((route) => {
   };
 });
 
-export const Router = () => {
+if (Object.keys(STYLES).length === 0) {
+  console.error("No styles found");
+}
+if (Object.keys(ROUTES).length === 0) {
+  console.error("No routes found");
+}
+if (!Object.keys(PRESERVED).includes("/src/layouts/_notFound.jsx")) {
+  console.error("No 404 found");
+}
+if (!Object.keys(PRESERVED).includes("/src/layouts/_loading.jsx")) {
+  console.error("No loader found");
+}
+const Router = () => {
   const location = useLocation();
   const App = preserved?.["_app"] || Fragment;
   const NotFound = preserved?.["_notFound"] || Fragment;
+  const Loading = preserved?.["_loading"] || Fragment;
 
   return (
     <Suspense fallback={<Loading />}>
@@ -45,3 +61,5 @@ export const Router = () => {
     </Suspense>
   );
 };
+
+export default withStyles(STYLES)(Router);
