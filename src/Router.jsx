@@ -1,6 +1,11 @@
 import React, { Fragment, lazy, Suspense } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
 import { withStyles } from "react-critical-css";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+  Route,
+} from "react-router-dom";
 
 const PRESERVED = import.meta.globEager(
   "/src/layouts/(_app|_notFound|_loading).jsx"
@@ -14,6 +19,7 @@ const preserved = Object.keys(PRESERVED).reduce((preserved, file) => {
 }, {});
 
 export const routes = Object.keys(ROUTES).map((route) => {
+  const routes = ROUTES[route];
   const path = route
     .replace(/\/src\/screens|index|\.jsx$/g, "")
     .replace(/\[\.{3}.+\]/, "*")
@@ -21,6 +27,7 @@ export const routes = Object.keys(ROUTES).map((route) => {
   return {
     path,
     component: lazy(ROUTES[route]),
+    loader: (...args) => routes().then((mod) => mod?.loader?.(...args)),
     preload: ROUTES[route],
   };
 });
@@ -38,25 +45,41 @@ if (!Object.keys(PRESERVED).includes("/src/layouts/_loading.jsx")) {
   console.error("No loader found");
 }
 const Router = () => {
-  const location = useLocation();
   const App = preserved?.["_app"] || Fragment;
   const NotFound = preserved?.["_notFound"] || Fragment;
   const Loading = preserved?.["_loading"] || Fragment;
+
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <>
+        {routes.map(({ path, component: Component = Fragment, loader }) => {
+          return (
+            <Route
+              key={path}
+              path={path}
+              element={<Component />}
+              loader={loader}
+            />
+          );
+        })}
+        <Route path="*" element={<NotFound />} />
+      </>
+    )
+  );
 
   return (
     <Suspense fallback={<Loading />}>
       <App
         not404={
-          routes.map((route) => route.path).includes(location.pathname) ||
-          routes.map((route) => route.path).includes(location.pathname + "/")
+          routes
+            .map((route) => route.path)
+            .includes(window.location.pathname) ||
+          routes
+            .map((route) => route.path)
+            .includes(window.location.pathname + "/")
         }
       >
-        <Routes>
-          {routes.map(({ path, component: Component = Fragment }) => (
-            <Route key={path} path={path} element={<Component />} />
-          ))}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <RouterProvider router={router} />
       </App>
     </Suspense>
   );
