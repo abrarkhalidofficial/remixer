@@ -44,6 +44,7 @@ if (!Object.keys(PRESERVED).includes("/src/layouts/_notFound.jsx")) {
 if (!Object.keys(PRESERVED).includes("/src/layouts/_loading.jsx")) {
   console.error("No loader found");
 }
+
 const Router = () => {
   const App = preserved?.["_app"] || Fragment;
   const NotFound = preserved?.["_notFound"] || Fragment;
@@ -51,7 +52,21 @@ const Router = () => {
 
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <>
+      <Route
+        path="/"
+        element={
+          <App
+            not404={
+              routes
+                .map((route) => route.path)
+                .includes(window.location.pathname) ||
+              routes
+                .map((route) => route.path)
+                .includes(window.location.pathname + "/")
+            }
+          />
+        }
+      >
         {routes.map(({ path, component: Component = Fragment, loader }) => {
           return (
             <Route
@@ -63,24 +78,13 @@ const Router = () => {
           );
         })}
         <Route path="*" element={<NotFound />} />
-      </>
+      </Route>
     )
   );
 
   return (
     <Suspense fallback={<Loading />}>
-      <App
-        not404={
-          routes
-            .map((route) => route.path)
-            .includes(window.location.pathname) ||
-          routes
-            .map((route) => route.path)
-            .includes(window.location.pathname + "/")
-        }
-      >
-        <RouterProvider router={router} />
-      </App>
+      <RouterProvider router={router} />
     </Suspense>
   );
 };

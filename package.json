@@ -14,18 +14,18 @@
     "react-critical-css": "^2.1.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
-    "react-router-dom": "^6.4.2"
+    "react-router-dom": "^6.4.3"
   },
   "devDependencies": {
-    "@types/react": "^18.0.24",
+    "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
     "@vitejs/plugin-react": "^2.2.0",
-    "sass": "^1.55.0",
-    "vite": "^3.2.1",
+    "sass": "^1.56.0",
+    "vite": "^3.2.2",
     "vite-imagetools": "^4.0.11",
     "vite-plugin-chunk-split": "^0.4.3",
     "vite-plugin-compression": "^0.5.1",
     "vite-plugin-imagemin": "^0.6.1",
-    "vite-plugin-webfont-dl": "^3.4.0"
+    "vite-plugin-webfont-dl": "^3.4.1"
   }
 }
