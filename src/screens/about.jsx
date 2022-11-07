@@ -1,6 +1,5 @@
 import React from "react";
-import Head from "components/Head";
-import { Link } from "components/Link";
+import { Head, Link } from "components";
 
 export default function About() {
   return (

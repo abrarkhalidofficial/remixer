@@ -37,8 +37,6 @@ export const eagerRoutes = Object.keys(EAGER_ROUTES)
     };
   });
 
-console.log(Object.keys(EAGER_ROUTES));
-
 export const lazyRoutes = Object.keys(LAZY_ROUTES).map((route) => {
   const routes = ROUTES[route];
   const path = route
@@ -54,18 +52,16 @@ export const lazyRoutes = Object.keys(LAZY_ROUTES).map((route) => {
   };
 });
 
-console.log(eagerRoutes);
-
 if (Object.keys(STYLES).length === 0) {
   console.error("No styles found");
 }
 if (Object.keys(ROUTES).length === 0) {
   console.error("No routes found");
 }
-if (!Object.keys(PRESERVED).includes("/src/layouts/_notFound.jsx")) {
+if (!Object.keys(PRESERVED).includes("/src/layouts/notFound.jsx")) {
   console.error("No 404 found");
 }
-if (!Object.keys(PRESERVED).includes("/src/layouts/_loading.jsx")) {
+if (!Object.keys(PRESERVED).includes("/src/layouts/loading.jsx")) {
   console.error("No loader found");
 }
 

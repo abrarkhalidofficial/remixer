@@ -1,7 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Footer from "components/Footer";
-import Header from "components/Header";
+import { Header, Footer } from "components";
 
 export default function App({ not404 }) {
   return (

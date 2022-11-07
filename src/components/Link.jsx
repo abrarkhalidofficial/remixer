@@ -9,8 +9,7 @@ const getMatchingRoute = (path) => {
       path.match(new RegExp(route.path.replace(/:\w+|\*/g, ".*")))?.[0] === path
   );
 };
-
-export const Link = ({ children, to, as, prefetch = true, ...props }) => {
+const Link = ({ children, to, as, prefetch = true, ...props }) => {
   const ref = useRef(null);
   const [prefetched, setPrefetched] = useState(false);
 
@@ -46,3 +45,5 @@ export const Link = ({ children, to, as, prefetch = true, ...props }) => {
     </RouterLink>
   );
 };
+
+export default Link;
