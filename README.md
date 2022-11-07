@@ -52,8 +52,9 @@ Liked nextjs a lot but dont need complexity of ssr and backend stuff only wanted
 
 ## ToDo's
 
-[x] image presets
-[x] make it easy to find unused code
+[X] image presets
+
+[X] make it easy to find unused code
 
 ## Author
 
