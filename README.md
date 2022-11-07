@@ -48,7 +48,12 @@ React, Vite, Sass, React-router-dom
 
 Why i built this?
 
-Liked nextjs a lot but dont need complexity of ssr and backend stuff only wanted a handful of features like file based routing.
+Liked nextjs a lot but dont need complexity of ssr and backend stuff only wanted a handful of features like file based routing with an easy way to switch between eager and lazy laoding on route bases and ability to preload routes based on links also to import style files automatically and some helpers with other imports just want to make creating react based apps easy
+
+## ToDo's
+
+[x] image presets
+[x] make it easy to find unused code
 
 ## Author
 
