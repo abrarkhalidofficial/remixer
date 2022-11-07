@@ -1,8 +1,8 @@
 import React from "react";
 import { useLoaderData } from "react-router-dom";
-import { react } from "../assets";
-import Head from "../components/Head";
-import { Link } from "../components/Link";
+import { react } from "assets";
+import Head from "components/Head";
+import { Link } from "components/Link";
 
 export const loader = async () => {
   return "data from loader";
