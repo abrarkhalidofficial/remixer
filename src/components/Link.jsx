@@ -1,10 +1,10 @@
 import React from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link as RouterLink, NavLink } from "react-router-dom";
-import { routes } from "../Router";
+import { lazyRoutes } from "../Router";
 
 const getMatchingRoute = (path) => {
-  return routes.find(
+  return lazyRoutes.find(
     (route) =>
       path.match(new RegExp(route.path.replace(/:\w+|\*/g, ".*")))?.[0] === path
   );
