@@ -1,4 +1,3 @@
-import { Link as RouterLink, NavLink } from "react-router-dom";
 import { withStyles } from "react-critical-css";
 import { Helmet } from "react-helmet";
 import {
@@ -12,9 +11,11 @@ import {
   Suspense,
 } from "react";
 import {
-  createBrowserRouter,
   createRoutesFromElements,
+  createBrowserRouter,
+  Link as RouterLink,
   RouterProvider,
+  NavLink,
   Route,
 } from "react-router-dom";
 
@@ -70,19 +71,6 @@ const getMatchingRoute = (path) => {
   );
 };
 
-if (Object.keys(STYLES).length === 0) {
-  console.error("No styles found");
-}
-if (Object.keys(ROUTES).length === 0) {
-  console.error("No routes found");
-}
-if (!Object.keys(PRESERVED).includes("/src/layouts/notFound.jsx")) {
-  console.error("No 404 found");
-}
-if (!Object.keys(PRESERVED).includes("/src/layouts/loading.jsx")) {
-  console.error("No loader found");
-}
-
 export function Head({ title, description }) {
   return (
     <Helmet>
@@ -130,63 +118,78 @@ export function Link({ children, to, as, prefetch = true, ...props }) {
 }
 
 const Router = () => {
+  if (Object.keys(STYLES).length === 0) {
+    console.error("No styles found");
+  }
+  if (Object.keys(ROUTES).length === 0) {
+    console.error("No routes found");
+  }
+  if (!Object.keys(PRESERVED).includes("/src/layouts/notFound.jsx")) {
+    console.error("No 404 found");
+  }
+  if (!Object.keys(PRESERVED).includes("/src/layouts/loading.jsx")) {
+    console.error("No loader found");
+  }
+
   const App = preserved?.["app"] || Fragment;
   const NotFound = preserved?.["notFound"] || Fragment;
   const Loading = preserved?.["loading"] || Fragment;
 
-  const router = createBrowserRouter(
-    createRoutesFromElements(
-      <Route
-        path="/"
-        element={
-          <App
-            not404={
-              lazyRoutes
-                .map((route) => route.path)
-                .includes(window.location.pathname) ||
-              lazyRoutes
-                .map((route) => route.path)
-                .includes(window.location.pathname + "/") ||
-              eagerRoutes
-                .map((route) => route.path)
-                .includes(window.location.pathname) ||
-              eagerRoutes
-                .map((route) => route.path)
-                .includes(window.location.pathname + "/")
-            }
-          />
-        }
-      >
-        {eagerRoutes?.map(
-          ({ path, component: Component = Fragment, loader }) => {
-            return (
-              <Route
-                key={path}
-                path={path}
-                element={<Component />}
-                loader={loader}
-              />
-            );
-          }
-        )}
-        {lazyRoutes.map(({ path, component: Component = Fragment, loader }) => {
-          return (
-            <Route
-              key={path}
-              path={path}
-              element={<Component />}
-              loader={loader}
-            />
-          );
-        })}
-        <Route path="*" element={<NotFound />} />
-      </Route>
-    )
-  );
-
   return (
     <Suspense fallback={<Loading />}>
-      <RouterProvider router={router} />
+      <RouterProvider
+        router={createBrowserRouter(
+          createRoutesFromElements(
+            <Route
+              path="/"
+              element={
+                <App
+                  not404={
+                    lazyRoutes
+                      .map((route) => route.path)
+                      .includes(window.location.pathname) ||
+                    lazyRoutes
+                      .map((route) => route.path)
+                      .includes(window.location.pathname + "/") ||
+                    eagerRoutes
+                      .map((route) => route.path)
+                      .includes(window.location.pathname) ||
+                    eagerRoutes
+                      .map((route) => route.path)
+                      .includes(window.location.pathname + "/")
+                  }
+                />
+              }
+            >
+              {eagerRoutes?.map(
+                ({ path, component: Component = Fragment, loader }) => {
+                  return (
+                    <Route
+                      key={path}
+                      path={path}
+                      element={<Component />}
+                      loader={loader}
+                    />
+                  );
+                }
+              )}
+              {lazyRoutes.map(
+                ({ path, component: Component = Fragment, loader }) => {
+                  return (
+                    <Route
+                      key={path}
+                      path={path}
+                      element={<Component />}
+                      loader={loader}
+                    />
+                  );
+                }
+              )}
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          )
+        )}
+      />
     </Suspense>
   );
 };
