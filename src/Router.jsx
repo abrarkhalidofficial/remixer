@@ -1,5 +1,16 @@
-import React, { Fragment, lazy, Suspense } from "react";
+import { Link as RouterLink, NavLink } from "react-router-dom";
 import { withStyles } from "react-critical-css";
+import { Helmet } from "react-helmet";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  Fragment,
+  lazy,
+  Suspense,
+} from "react";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -20,7 +31,7 @@ const preserved = Object.keys(PRESERVED).reduce((preserved, file) => {
   return { ...preserved, [key]: PRESERVED[file].default };
 }, {});
 
-export const eagerRoutes = Object.keys(EAGER_ROUTES)
+const eagerRoutes = Object.keys(EAGER_ROUTES)
   .filter((route) => !route.includes(".lazy"))
   .map((route) => {
     const routes = ROUTES[route];
@@ -37,7 +48,7 @@ export const eagerRoutes = Object.keys(EAGER_ROUTES)
     };
   });
 
-export const lazyRoutes = Object.keys(LAZY_ROUTES).map((route) => {
+const lazyRoutes = Object.keys(LAZY_ROUTES).map((route) => {
   const routes = ROUTES[route];
   const path = route
     .replace(/\/src\/screens|index|\.jsx$/g, "")
@@ -52,6 +63,13 @@ export const lazyRoutes = Object.keys(LAZY_ROUTES).map((route) => {
   };
 });
 
+const getMatchingRoute = (path) => {
+  return lazyRoutes.find(
+    (route) =>
+      path.match(new RegExp(route.path.replace(/:\w+|\*/g, ".*")))?.[0] === path
+  );
+};
+
 if (Object.keys(STYLES).length === 0) {
   console.error("No styles found");
 }
@@ -63,6 +81,52 @@ if (!Object.keys(PRESERVED).includes("/src/layouts/notFound.jsx")) {
 }
 if (!Object.keys(PRESERVED).includes("/src/layouts/loading.jsx")) {
   console.error("No loader found");
+}
+
+export function Head({ title, description }) {
+  return (
+    <Helmet>
+      <title>{title}</title>
+      <meta name="description" content={description ? description : title} />
+    </Helmet>
+  );
+}
+
+export function Link({ children, to, as, prefetch = true, ...props }) {
+  const ref = useRef(null);
+  const [prefetched, setPrefetched] = useState(false);
+
+  const route = useMemo(() => getMatchingRoute(to), [to]);
+  const preload = useCallback(
+    () => route?.preload() && setPrefetched(true),
+    [route]
+  );
+  const prefetchable = Boolean(route && !prefetched);
+
+  useEffect(() => {
+    if (prefetchable && prefetch && ref?.current) {
+      const observer = new IntersectionObserver(
+        (entries) =>
+          entries.forEach((entry) => entry.isIntersecting && preload()),
+        { rootMargin: "200px" }
+      );
+
+      observer.observe(ref.current);
+      return () => observer.disconnect();
+    }
+  }, [prefetch, prefetchable, preload]);
+
+  const handleMouseEnter = () => prefetchable && preload();
+
+  return as === "NavLink" ? (
+    <NavLink ref={ref} to={to} onMouseEnter={handleMouseEnter} {...props}>
+      {children}
+    </NavLink>
+  ) : (
+    <RouterLink ref={ref} to={to} onMouseEnter={handleMouseEnter} {...props}>
+      {children}
+    </RouterLink>
+  );
 }
 
 const Router = () => {

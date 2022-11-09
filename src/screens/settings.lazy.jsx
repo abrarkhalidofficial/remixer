@@ -1,6 +1,6 @@
 import React from "react";
 import { useLoaderData } from "react-router-dom";
-import { Head, Link } from "components";
+import { Head, Link } from "../Router";
 import { react } from "assets";
 
 export const loader = async () => {
