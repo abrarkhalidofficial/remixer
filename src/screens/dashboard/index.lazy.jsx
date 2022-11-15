@@ -1,5 +1,5 @@
 import React from "react";
-import { Head } from "../../Router";
+import { Head } from "router";
 
 export default function Index() {
   return (

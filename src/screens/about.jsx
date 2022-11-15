@@ -1,5 +1,5 @@
 import React from "react";
-import { Head, Link } from "../Router";
+import { Head, Link } from "router";
 
 export default function About() {
   return (
