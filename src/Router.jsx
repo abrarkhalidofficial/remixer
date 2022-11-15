@@ -117,6 +117,27 @@ export function Link({ children, to, as, prefetch = true, ...props }) {
   );
 }
 
+export function SuspenseAfterInitialRender({ fallback, children }) {
+  let [isInitialRender, setIsInitialRender] = useState(true);
+
+  return isInitialRender ? (
+    <>
+      <Lifecycle afterRender={() => setIsInitialRender(false)} />
+      {children}
+    </>
+  ) : (
+    <Suspense fallback={fallback}>{children}</Suspense>
+  );
+}
+
+function Lifecycle({ afterRender }) {
+  useEffect(() => {
+    afterRender();
+  }, [afterRender]);
+
+  return null;
+}
+
 const Router = () => {
   if (Object.keys(STYLES).length === 0) {
     console.error("No styles found");
