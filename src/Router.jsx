@@ -1,23 +1,24 @@
-import { withStyles } from "react-critical-css";
-import { Helmet } from "react-helmet";
 import {
+  Fragment,
+  Suspense,
+  lazy,
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
-  Fragment,
-  lazy,
-  Suspense,
 } from "react";
 import {
-  createRoutesFromElements,
-  createBrowserRouter,
-  Link as RouterLink,
-  RouterProvider,
   NavLink,
   Route,
+  Link as RouterLink,
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromElements,
 } from "react-router-dom";
+
+import { Helmet } from "react-helmet";
+import { withStyles } from "react-critical-css";
 
 const PRESERVED = import.meta.globEager(
   "/src/layouts/(app|notFound|loading).jsx"

@@ -1,5 +1,5 @@
-import React from "react";
 import { Head } from "router";
+import React from "react";
 
 export default function Index() {
   return (
