@@ -3442,10 +3442,10 @@ vite-imagetools@^4.0.11:
     "@rollup/pluginutils" "^5.0.0"
     imagetools-core "^3.2.3"
 
-vite-plugin-chunk-split@^0.4.3:
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/vite-plugin-chunk-split/-/vite-plugin-chunk-split-0.4.3.tgz#dceb593e330adcb047ba543cfde198186a5a332e"
-  integrity sha512-PW22WxPRXL+ZlOQ98Ma34g0aNjBQDbA3V7b1s8dVANfKKeBznhxcLOQH7/nv2zmXtKellNiB0ABt37odmBuxwg==
+vite-plugin-chunk-split@^0.4.4:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/vite-plugin-chunk-split/-/vite-plugin-chunk-split-0.4.4.tgz#92d179d0be5d107dd1798c3a34ce95bdfb3a1f5d"
+  integrity sha512-IXd2AeecLxaovSpZLvz0Xy5LvqwKEP35QUE+YmZ07BqdByvtNpw+nAkOUcAxbHR10Yo8AkLs7kXMO80N9qPIww==
   dependencies:
     es-module-lexer "^1.0.3"
     magic-string "^0.26.3"
