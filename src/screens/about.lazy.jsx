@@ -2,14 +2,14 @@ import { Head } from "router";
 import { useLoaderData } from "react-router-dom";
 
 export const loader = async () => {
-  return "data from loader";
+  return "about from loader";
 };
 
-export default function Index() {
+export default function Lazy() {
   const data = useLoaderData();
   return (
     <div>
-      <Head title="Home | Demo Template" description="Home | Demo Template" />
+      <Head title="About | Demo Template" description="Home | Demo Template" />
       <div>{data}</div>
     </div>
   );
