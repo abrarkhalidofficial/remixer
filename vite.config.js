@@ -22,7 +22,7 @@ export default defineConfig({
       },
       {
         find: "router",
-        replacement: path.resolve(__dirname, "./src/router.jsx"),
+        replacement: path.resolve(__dirname, "./src/router"),
       },
     ],
   },
