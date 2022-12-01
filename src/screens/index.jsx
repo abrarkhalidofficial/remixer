@@ -1,5 +1,4 @@
-import { Head, Link } from "router";
-
+import { Head } from "router";
 import React from "react";
 import { useLoaderData } from "react-router-dom";
 
@@ -12,9 +11,7 @@ export default function Index() {
   return (
     <div>
       <Head title="Home | Demo Template" description="Home | Demo Template" />
-      index
       <div>{data}</div>
-      <Link to="/about">About</Link>
     </div>
   );
 }

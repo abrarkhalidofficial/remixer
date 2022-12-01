@@ -3,12 +3,12 @@ import { Footer, Header } from "components";
 import { Outlet } from "react-router-dom";
 import React from "react";
 
-export default function App({ not404 }) {
+export default function App() {
   return (
     <>
-      {not404 ? <Header /> : null}
+      <Header />
       <Outlet />
-      {not404 ? <Footer /> : null}
+      <Footer />
     </>
   );
 }

@@ -200,18 +200,7 @@ const Router = () => {
       <RouterProvider
         router={createBrowserRouter(
           createRoutesFromElements(
-            <Route
-              path="/"
-              element={
-                <App
-                  not404={routes
-                    .map((route) => route.path)
-                    .includes(
-                      window.location.pathname || window.location.pathname + "/"
-                    )}
-                />
-              }
-            >
+            <Route path="/" element={<App />}>
               {routes?.map(
                 ({ path, component: Component = Fragment, loader, action }) => {
                   return (
