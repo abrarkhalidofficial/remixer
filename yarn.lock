@@ -2920,7 +2920,9 @@ __metadata:
     "@types/react": ^18.0.26
     "@types/react-dom": ^18.0.9
     "@vitejs/plugin-react": ^2.2.0
+    jotai: ^1.11.0
     react: ^18.2.0
+    react-click-away-listener: ^2.2.2
     react-critical-css: ^2.1.0
     react-dom: ^18.2.0
     react-helmet: ^6.1.0
@@ -4995,6 +4997,46 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jotai@npm:^1.11.0":
+  version: 1.11.0
+  resolution: "jotai@npm:1.11.0"
+  peerDependencies:
+    "@babel/core": "*"
+    "@babel/template": "*"
+    jotai-immer: "*"
+    jotai-optics: "*"
+    jotai-redux: "*"
+    jotai-tanstack-query: "*"
+    jotai-urql: "*"
+    jotai-valtio: "*"
+    jotai-xstate: "*"
+    jotai-zustand: "*"
+    react: ">=16.8"
+  peerDependenciesMeta:
+    "@babel/core":
+      optional: true
+    "@babel/template":
+      optional: true
+    jotai-immer:
+      optional: true
+    jotai-optics:
+      optional: true
+    jotai-redux:
+      optional: true
+    jotai-tanstack-query:
+      optional: true
+    jotai-urql:
+      optional: true
+    jotai-valtio:
+      optional: true
+    jotai-xstate:
+      optional: true
+    jotai-zustand:
+      optional: true
+  checksum: 9cac4074d8eded12bfcbb20bf9d3038c69060e4a56db398954351e41fb49a5ceb5fd178fb8f29d23a58d4e49ccc592bd7fc82dcce3387618b196ff32bb937634
+  languageName: node
+  linkType: hard
+
 "jpegtran-bin@npm:^5.0.0":
   version: 5.0.2
   resolution: "jpegtran-bin@npm:5.0.2"
@@ -6174,6 +6216,16 @@ __metadata:
   bin:
     rc: ./cli.js
   checksum: 2e26e052f8be2abd64e6d1dabfbd7be03f80ec18ccbc49562d31f617d0015fbdbcf0f9eed30346ea6ab789e0fdfe4337f033f8016efdbee0df5354751842080e
+  languageName: node
+  linkType: hard
+
+"react-click-away-listener@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "react-click-away-listener@npm:2.2.2"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: f1d95b1cdab566f1eafdc64e8cb98e352b8210978ffeadf4ca05c3f998adc6631897f51e9b5f8ffe8525fc8a5cdca57c2f66fc9c9b56cedf3f3c67a3c5a1d17b
   languageName: node
   linkType: hard
 
