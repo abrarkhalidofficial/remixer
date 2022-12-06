@@ -31,6 +31,7 @@ const preserved = Object.keys(PRESERVED).reduce((preserved, file) => {
 
 const eagerRoutes = Object.keys(EAGER_ROUTES)
   .filter((route) => !route.includes(".lazy"))
+  .filter((route) => !route.includes(".protected"))
   .map((route) => {
     const routes = ROUTES[route];
     const path = route
