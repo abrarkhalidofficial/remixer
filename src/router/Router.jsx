@@ -9,7 +9,7 @@ import {
 import { withStyles } from "react-critical-css";
 
 const PRESERVED = import.meta.glob(
-  "/src/layouts/(app|notFound|loading|error).jsx",
+  "/src/layouts/(app|notFound|loading|error|protected).jsx",
   {
     eager: true,
   }
@@ -18,6 +18,9 @@ const EAGER_ROUTES = import.meta.glob("/src/screens/**/[a-z[]*.jsx", {
   eager: true,
 });
 const LAZY_ROUTES = import.meta.glob("/src/screens/**/[a-z[]*.lazy.jsx");
+const PROTECTED_ROUTES = import.meta.glob(
+  "/src/screens/**/[a-z[]*.protected.jsx"
+);
 const ROUTES = import.meta.glob("/src/screens/**/[a-z[]*.jsx");
 const STYLES = import.meta.glob("/src/styles/*.(scss|css)", { eager: true });
 
@@ -61,6 +64,23 @@ const lazyRoutes = Object.keys(LAZY_ROUTES).map((route) => {
   };
 });
 
+const protectedRoutes = Object.keys(PROTECTED_ROUTES).map((route) => {
+  const routes = ROUTES[route];
+  const path = route
+    .replace(/\/src\/screens|index|\.jsx$/g, "")
+    .replace(/\[\.{3}.+\]/, "*")
+    .replace(/\[(.+)\]/, ":$1")
+    .replace(/\.protected/, "");
+
+  return {
+    path,
+    component: lazy(PROTECTED_ROUTES[route]),
+    loader: async (...args) => routes().then((mod) => mod?.loader?.(...args)),
+    action: async (...args) => routes().then((mod) => mod?.action?.(...args)),
+    preload: ROUTES[route],
+  };
+});
+
 const routes = [...eagerRoutes, ...lazyRoutes];
 
 export const getMatchingRoute = (path) => {
@@ -91,6 +111,7 @@ const Router = () => {
   const NotFound = preserved?.["notFound"] || Fragment;
   const Loading = preserved?.["loading"] || Fragment;
   const Error = preserved?.["error"] || Fragment;
+  const Protected = preserved?.["protected"] || Fragment;
 
   return (
     <Suspense fallback={<Loading />}>
@@ -112,6 +133,27 @@ const Router = () => {
                   );
                 }
               )}
+              <Route path="/" element={<Protected />}>
+                {protectedRoutes?.map(
+                  ({
+                    path,
+                    component: Component = Fragment,
+                    loader,
+                    action,
+                  }) => {
+                    return (
+                      <Route
+                        key={path}
+                        path={path}
+                        element={<Component />}
+                        loader={loader}
+                        action={action}
+                        errorElement={<Error />}
+                      />
+                    );
+                  }
+                )}
+              </Route>
               <Route path="*" element={<NotFound />} />
             </Route>
           )
