@@ -37,7 +37,10 @@ const eagerRoutes = Object.keys(EAGER_ROUTES)
     const path = route
       .replace(/\/src\/screens|index|\.jsx$/g, "")
       .replace(/\[\.{3}.+\]/, "*")
-      .replace(/\[(.+)\]/, ":$1");
+      .replace(/\[(.+)\]/, ":$1")
+      .split("/")
+      .filter((p) => !p.includes("_"))
+      .join("/");
 
     return {
       path,
@@ -54,7 +57,10 @@ const lazyRoutes = Object.keys(LAZY_ROUTES).map((route) => {
     .replace(/\/src\/screens|index|\.jsx$/g, "")
     .replace(/\[\.{3}.+\]/, "*")
     .replace(/\[(.+)\]/, ":$1")
-    .replace(/\.lazy/, "");
+    .replace(/\.lazy/, "")
+    .split("/")
+    .filter((p) => !p.includes("_"))
+    .join("/");
 
   return {
     path,
@@ -71,7 +77,10 @@ const protectedRoutes = Object.keys(PROTECTED_ROUTES).map((route) => {
     .replace(/\/src\/screens|index|\.jsx$/g, "")
     .replace(/\[\.{3}.+\]/, "*")
     .replace(/\[(.+)\]/, ":$1")
-    .replace(/\.protected/, "");
+    .replace(/\.protected/, "")
+    .split("/")
+    .filter((p) => !p.includes("_"))
+    .join("/");
 
   return {
     path,
