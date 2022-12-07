@@ -9,19 +9,19 @@ import {
 import { withStyles } from "react-critical-css";
 
 const PRESERVED = import.meta.glob(
-  "/src/layouts/(app|notFound|loading|error|protected).jsx",
+  "/src/layouts/(app|notFound|loading|error|protected).(jsx|tsx)",
   {
     eager: true,
   }
 );
-const EAGER_ROUTES = import.meta.glob("/src/screens/**/[a-z[]*.jsx", {
+const EAGER_ROUTES = import.meta.glob("/src/screens/**/[a-z[]*.(jsx|tsx)", {
   eager: true,
 });
-const LAZY_ROUTES = import.meta.glob("/src/screens/**/[a-z[]*.lazy.jsx");
+const LAZY_ROUTES = import.meta.glob("/src/screens/**/[a-z[]*.lazy.(jsx|tsx)");
 const PROTECTED_ROUTES = import.meta.glob(
-  "/src/screens/**/[a-z[]*.protected.jsx"
+  "/src/screens/**/[a-z[]*.protected.(jsx|tsx)"
 );
-const ROUTES = import.meta.glob("/src/screens/**/[a-z[]*.jsx");
+const ROUTES = import.meta.glob("/src/screens/**/[a-z[]*.(jsx|tsx)");
 const STYLES = import.meta.glob("/src/styles/*.(scss|css)", { eager: true });
 
 const preserved = Object.keys(PRESERVED).reduce((preserved, file) => {
@@ -35,7 +35,7 @@ const eagerRoutes = Object.keys(EAGER_ROUTES)
   .map((route) => {
     const routes = ROUTES[route];
     const path = route
-      .replace(/\/src\/screens|index|\.jsx$/g, "")
+      .replace(/\/src\/screens|index|\.jsx|\.tsx$/g, "")
       .replace(/\[\.{3}.+\]/, "*")
       .replace(/\[(.+)\]/, ":$1")
       .split("/")
@@ -54,7 +54,7 @@ const eagerRoutes = Object.keys(EAGER_ROUTES)
 const lazyRoutes = Object.keys(LAZY_ROUTES).map((route) => {
   const routes = ROUTES[route];
   const path = route
-    .replace(/\/src\/screens|index|\.jsx$/g, "")
+    .replace(/\/src\/screens|index|\.jsx|\.tsx$/g, "")
     .replace(/\[\.{3}.+\]/, "*")
     .replace(/\[(.+)\]/, ":$1")
     .replace(/\.lazy/, "")
@@ -74,7 +74,7 @@ const lazyRoutes = Object.keys(LAZY_ROUTES).map((route) => {
 const protectedRoutes = Object.keys(PROTECTED_ROUTES).map((route) => {
   const routes = ROUTES[route];
   const path = route
-    .replace(/\/src\/screens|index|\.jsx$/g, "")
+    .replace(/\/src\/screens|index|\.jsx|\.tsx$/g, "")
     .replace(/\[\.{3}.+\]/, "*")
     .replace(/\[(.+)\]/, ":$1")
     .replace(/\.protected/, "")
