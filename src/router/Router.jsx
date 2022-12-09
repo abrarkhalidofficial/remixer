@@ -46,8 +46,14 @@ const eagerRoutes = Object.keys(EAGER_ROUTES)
     return {
       path,
       component: EAGER_ROUTES[route].default,
-      loader: async (...args) => routes().then((mod) => mod?.loader?.(...args)),
-      action: async (...args) => routes().then((mod) => mod?.action?.(...args)),
+      loader: async (...args) =>
+        routes()
+          .then((mod) => mod?.loader)
+          .then((res) => (res === undefined ? null : res?.(...args))),
+      action: async (...args) =>
+        routes()
+          .then((mod) => mod?.action)
+          .then((res) => (res === undefined ? null : res?.(...args))),
       preload: ROUTES[route],
     };
   });
@@ -66,8 +72,14 @@ const lazyRoutes = Object.keys(LAZY_ROUTES).map((route) => {
   return {
     path,
     component: lazy(LAZY_ROUTES[route]),
-    loader: async (...args) => routes().then((mod) => mod?.loader?.(...args)),
-    action: async (...args) => routes().then((mod) => mod?.action?.(...args)),
+    loader: async (...args) =>
+      routes()
+        .then((mod) => mod?.loader)
+        .then((res) => (res === undefined ? null : res?.(...args))),
+    action: async (...args) =>
+      routes()
+        .then((mod) => mod?.action)
+        .then((res) => (res === undefined ? null : res?.(...args))),
     preload: ROUTES[route],
   };
 });
@@ -86,8 +98,14 @@ const protectedRoutes = Object.keys(PROTECTED_ROUTES).map((route) => {
   return {
     path,
     component: lazy(PROTECTED_ROUTES[route]),
-    loader: async (...args) => routes().then((mod) => mod?.loader?.(...args)),
-    action: async (...args) => routes().then((mod) => mod?.action?.(...args)),
+    loader: async (...args) =>
+      routes()
+        .then((mod) => mod?.loader)
+        .then((res) => (res === undefined ? null : res?.(...args))),
+    action: async (...args) =>
+      routes()
+        .then((mod) => mod?.action)
+        .then((res) => (res === undefined ? null : res?.(...args))),
     preload: ROUTES[route],
   };
 });
@@ -116,7 +134,9 @@ if (!Object.keys(PRESERVED).includes("/src/layouts/loading.jsx")) {
 if (!Object.keys(PRESERVED).includes("/src/layouts/error.jsx")) {
   console.error("No error element found");
 }
-
+if (!Object.keys(PRESERVED).includes("/src/layouts/protected.jsx")) {
+  console.error("No protected element found");
+}
 const Router = () => {
   const App = preserved?.["app"] || Fragment;
   const NotFound = preserved?.["notFound"] || Fragment;

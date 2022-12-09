@@ -1,12 +1,11 @@
-import { Link } from "react-router-dom";
-
-export const loader = () => null;
+import { Link } from "router";
 
 export default function About() {
   return (
     <div>
       about
       <Link to="/">Home</Link>
+      <Link to="/settings">Settings</Link>
     </div>
   );
 }
