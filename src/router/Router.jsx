@@ -6,6 +6,7 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 
+import { Partytown } from "@builder.io/partytown/react";
 import { withStyles } from "react-critical-css";
 
 const PRESERVED = import.meta.glob(
@@ -125,6 +126,7 @@ const Router = () => {
 
   return (
     <Suspense fallback={<Loading />}>
+      <Partytown debug={true} forward={["dataLayer.push"]} />
       <RouterProvider
         router={createBrowserRouter(
           createRoutesFromElements(
