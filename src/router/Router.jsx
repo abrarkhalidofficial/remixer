@@ -94,7 +94,7 @@ const protectedRoutes = Object.keys(PROTECTED_ROUTES).map((route) => {
 const routes = [...eagerRoutes, ...lazyRoutes];
 
 export const getMatchingRoute = (path) => {
-  return routes.find(
+  return lazyRoutes.find(
     (route) =>
       path.match(new RegExp(route.path.replace(/:\w+|\*/g, ".*")))?.[0] === path
   );

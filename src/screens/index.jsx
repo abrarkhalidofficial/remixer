@@ -1,30 +1,19 @@
-import { Head, Link } from "router";
-
+import { Link } from "router";
+import { useAtom } from "jotai";
 import { useLoaderData } from "react-router-dom";
-import { useUserContext } from "contexts";
+import { userAtom } from "global";
 
-export const loader = async () => {
-  return "data from loader";
-};
+export const loader = () => "data from loader";
 
-export default function Index() {
+export default function index() {
   const data = useLoaderData();
-  const [user, setUser] = useUserContext();
+  const [user] = useAtom(userAtom);
   return (
     <div>
-      <Head title="Home | Demo Template" description="Home | Demo Template" />
-      <div>
-        {data}
-        {user}
-      </div>
-      <Link
-        to="/about"
-        onClick={() => {
-          setUser("user");
-        }}
-      >
-        About
-      </Link>
+      index
+      {data}
+      {user}
+      <Link to="/about">About</Link>
     </div>
   );
 }

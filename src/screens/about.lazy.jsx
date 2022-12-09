@@ -1,11 +1,11 @@
-import { Link } from "router";
-import { useUserContext } from "contexts";
+import { Link } from "react-router-dom";
+
+export const loader = () => null;
 
 export default function About() {
-  const [user] = useUserContext();
   return (
     <div>
-      about{user}
+      about
       <Link to="/">Home</Link>
     </div>
   );
