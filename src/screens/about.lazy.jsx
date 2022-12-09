@@ -1,9 +1,12 @@
 import { Link } from "router";
+import { useUserContext } from "contexts";
 
 export default function About() {
+  const [user] = useUserContext();
   return (
     <div>
-      about<Link to="/">Home</Link>
+      about{user}
+      <Link to="/">Home</Link>
     </div>
   );
 }
