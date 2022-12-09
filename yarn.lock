@@ -3295,11 +3295,6 @@ jest-worker@^26.2.1:
     merge-stream "^2.0.0"
     supports-color "^7.0.0"
 
-jotai@^1.11.0:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/jotai/-/jotai-1.11.0.tgz#d2a666f16935797743eb41a3b75583ea4e17fefb"
-  integrity sha512-8OzJmRxcTZoAOJSz6uTnmofmjAOgNOdAOy26rvyw3OBxt6XIoklNnfUTCm8wgp84SSLJbPZA01VS5O/SUz+QYg==
-
 jpegtran-bin@^5.0.0:
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/jpegtran-bin/-/jpegtran-bin-5.0.2.tgz#5870fd7e68317bd203a1c94572bd06ae7732cac3"
@@ -4093,6 +4088,11 @@ react-side-effect@^2.1.0:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/react-side-effect/-/react-side-effect-2.1.2.tgz#dc6345b9e8f9906dc2eeb68700b615e0b4fe752a"
   integrity sha512-PVjOcvVOyIILrYoyGEpDN3vmYNLdy1CajSFNt4TDsVQC5KpTijDvWVoR+/7Rz2xT978D8/ZtFceXxzsPwZEDvw==
+
+react-super-context@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-super-context/-/react-super-context-1.0.1.tgz#bf6e371d69f511674da6db3732dd7bc8bd901ec3"
+  integrity sha512-oiVkdIj6vEbmd82zej/eXZyPyU+TXSMOy1cAYM4dWJm18JBBXbjsvGBL1VB/VjhGmEqwM5YIMnXJ89Qf13rFzQ==
 
 react@^18.2.0:
   version "18.2.0"

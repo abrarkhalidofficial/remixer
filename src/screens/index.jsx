@@ -1,4 +1,5 @@
-import { Head } from "router";
+import { Head, Link } from "router";
+
 import { useLoaderData } from "react-router-dom";
 
 export const loader = async () => {
@@ -11,6 +12,7 @@ export default function Index() {
     <div>
       <Head title="Home | Demo Template" description="Home | Demo Template" />
       <div>{data}</div>
+      <Link to="/about">About</Link>
     </div>
   );
 }
