@@ -4026,11 +4026,6 @@ react-click-away-listener@^2.2.2:
   resolved "https://registry.yarnpkg.com/react-click-away-listener/-/react-click-away-listener-2.2.2.tgz#933104ae8df6bec1272b5738ebce4b665de16917"
   integrity sha512-6x5Ra+2xagMq+5YcBu42jtht+bKVErgPXaI/GqYP5M8Xz2o/UbGyMd3TISQK6ixfORUTvdHeRnOVU3TbSpZ5Zg==
 
-react-critical-css@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/react-critical-css/-/react-critical-css-2.1.0.tgz#b22bbb9331477619fd56556c51c9d77e4d8c8b31"
-  integrity sha512-iolL/KNwfiYmdsO6oHR2E23S9MTcEdUaMSuPKNCW542mripviZtbm/njFbRSF4oXuBwuAKYUMb6vguhgY3Urtw==
-
 react-dom@^18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.2.0.tgz#22aaf38708db2674ed9ada224ca4aa708d821e3d"

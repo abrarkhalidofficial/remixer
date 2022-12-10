@@ -7,13 +7,10 @@ import {
 } from "react-router-dom";
 
 import { Partytown } from "@builder.io/partytown/react";
-import { withStyles } from "react-critical-css";
 
 const PRESERVED = import.meta.glob(
   "/src/layouts/(app|notFound|loading|error|protected).jsx",
-  {
-    eager: true,
-  }
+  { eager: true }
 );
 const EAGER_ROUTES = import.meta.glob("/src/screens/**/[a-z[]*.jsx", {
   eager: true,
@@ -23,7 +20,7 @@ const PROTECTED_ROUTES = import.meta.glob(
   "/src/screens/**/[a-z[]*.protected.jsx"
 );
 const ROUTES = import.meta.glob("/src/screens/**/[a-z[]*.jsx");
-const STYLES = import.meta.glob("/src/styles/*.(scss|css)", { eager: true });
+import.meta.glob("/src/styles/*.(scss|css)", { eager: true });
 
 const preserved = Object.keys(PRESERVED).reduce((preserved, file) => {
   const key = file.replace(/\/src\/layouts\/|\.jsx$/g, "");
@@ -119,9 +116,6 @@ export const getMatchingRoute = (path) => {
   );
 };
 
-if (Object.keys(STYLES).length === 0) {
-  console.error("No styles found");
-}
 if (Object.keys(ROUTES).length === 0) {
   console.error("No routes found");
 }
@@ -137,6 +131,7 @@ if (!Object.keys(PRESERVED).includes("/src/layouts/error.jsx")) {
 if (!Object.keys(PRESERVED).includes("/src/layouts/protected.jsx")) {
   console.error("No protected element found");
 }
+
 const Router = () => {
   const App = preserved?.["app"] || Fragment;
   const NotFound = preserved?.["notFound"] || Fragment;
@@ -195,4 +190,4 @@ const Router = () => {
   );
 };
 
-export default withStyles(STYLES)(Router);
+export default Router;
