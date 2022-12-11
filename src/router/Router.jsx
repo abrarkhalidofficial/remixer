@@ -7,6 +7,9 @@ import {
 } from "react-router-dom";
 
 import { Partytown } from "@builder.io/partytown/react";
+import { actionFunction } from "./actionFunction";
+import { loaderFunction } from "./loaderFunction";
+import { pathExtractor } from "./pathExtractor";
 
 import.meta.glob("/src/styles/*.(scss|css)", { eager: true });
 
@@ -35,15 +38,6 @@ const preserved = Object.keys(PRESERVED).reduce(
   {}
 );
 
-const pathExtractor = (path) =>
-  path
-    .replace(/\/src\/screens|index|\.jsx$/g, "")
-    .replace(/\[\.{3}.+\]/, "*")
-    .replace(/\[(.+)\]/, ":$1")
-    .split("/")
-    .filter((p) => !p.includes("_"))
-    .join("/");
-
 const eagerRoutes = Object.keys(EAGER_ROUTES)
   .filter((route) => !route.includes(".lazy"))
   .filter((route) => !route.includes(".protected"))
@@ -55,7 +49,7 @@ const eagerRoutes = Object.keys(EAGER_ROUTES)
     preload: ROUTES[route],
   }));
 
-const lazyRoutes = Object.keys(LAZY_ROUTES).map((route) => ({
+export const lazyRoutes = Object.keys(LAZY_ROUTES).map((route) => ({
   path: pathExtractor(route).replace(/\.lazy/, ""),
   component: lazy(LAZY_ROUTES[route]),
   loader: loaderFunction(ROUTES[route]),
@@ -71,27 +65,7 @@ const protectedRoutes = Object.keys(PROTECTED_ROUTES).map((route) => ({
   preload: ROUTES[route],
 }));
 
-function loaderFunction(routes) {
-  return async (...args) =>
-    routes()
-      .then((mod) => mod?.loader)
-      .then((res) => (res === undefined ? null : res?.(...args)));
-}
-
-function actionFunction(routes) {
-  return async (...args) =>
-    routes()
-      .then((mod) => mod?.action)
-      .then((res) => (res === undefined ? null : res?.(...args)));
-}
-
 const routes = [...eagerRoutes, ...lazyRoutes];
-
-export const getMatchingRoute = (path) =>
-  lazyRoutes.find(
-    (route) =>
-      path.match(new RegExp(route.path.replace(/:\w+|\*/g, ".*")))?.[0] === path
-  );
 
 if (Object.keys(ROUTES).length === 0) console.error("No routes found");
 
