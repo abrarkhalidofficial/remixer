@@ -1,4 +1,4 @@
-import { App, Error, Loading, NotFound, Protected } from "./preservedRoutes";
+import { App, Loading, NotFound, Protected } from "./preservedRoutes";
 import { Fragment, Suspense } from "react";
 import {
   Route,
@@ -36,7 +36,6 @@ const Router = () => (
                     element={<Component />}
                     loader={loader}
                     action={action}
-                    errorElement={<Error />}
                   />
                 );
               }
@@ -51,7 +50,6 @@ const Router = () => (
                       element={<Component />}
                       loader={loader}
                       action={action}
-                      errorElement={<Error />}
                     />
                   );
                 }

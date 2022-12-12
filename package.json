@@ -11,10 +11,7 @@
   },
   "dependencies": {
     "@builder.io/partytown": "^0.7.3",
-    "clsx": "^1.2.1",
-    "jotai": "^1.11.1",
     "react": "^18.2.0",
-    "react-click-away-listener": "^2.2.2",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
     "react-router-dom": "6.4.5"

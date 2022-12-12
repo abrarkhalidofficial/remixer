@@ -42,7 +42,7 @@ Just do it any help would be appriciated
 
 ## Tech Stack
 
-React, Vite, Sass, React-router-dom, Jotai
+React, Vite, Sass, React-router-dom
 
 ## Questions
 
