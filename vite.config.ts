@@ -1,4 +1,3 @@
-import { VitePWA } from "vite-plugin-pwa";
 import { ViteWebfontDownload } from "vite-plugin-webfont-dl";
 import { chunkSplitPlugin } from "vite-plugin-chunk-split";
 import { defineConfig } from "vite";
@@ -35,7 +34,6 @@ export default defineConfig({
     ViteWebfontDownload(),
     chunkSplitPlugin(),
     imagetools(),
-    VitePWA({ registerType: "autoUpdate" }),
     viteCompression({
       algorithm: "brotliCompress",
       threshold: 100,

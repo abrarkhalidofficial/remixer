@@ -1,4 +1,4 @@
-import { lazyRoutes } from "./lazyRoutes";
+import { lazyRoutes } from "./Router";
 
 export const getMatchingRoute = (path: string) =>
   lazyRoutes.find(

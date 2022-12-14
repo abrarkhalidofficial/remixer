@@ -1,6 +1,6 @@
 {
   "files.exclude": {
-    "**/router": true,
+    // "**/router": true,
     "**/tsconfig.json": true
   }
 }
