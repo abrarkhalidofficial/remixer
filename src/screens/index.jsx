@@ -1,3 +1,8 @@
+import { useLoaderData } from "react-router-dom";
+
+export const loader = () => "index";
+
 export default function Index() {
-  return <div>index</div>;
+  const data = useLoaderData();
+  return <div>{data}</div>;
 }

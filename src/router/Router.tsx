@@ -6,30 +6,29 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 
-import { Partytown } from "@builder.io/partytown/react";
-
-const pathExtractor = (path: string) =>
-  path
+const pathExtractor = (path: string) => {
+  return path
     .replace(/\/src\/screens|index|\.jsx$/g, "")
     .replace(/\[\.{3}.+\]/, "*")
     .replace(/\[(.+)\]/, ":$1")
     .split("/")
     .filter((p) => !p.includes("_"))
     .join("/");
+};
 
-function actionFunction(routes: any) {
-  return async (...args) =>
+const action = (routes: any) => {
+  return async (...args: any) =>
     routes()
-      .then((mod) => mod?.action)
+      .then((mod: { action: any }) => mod?.action)
       .then((res) => (res === undefined ? null : res?.(...args)));
-}
+};
 
-function loaderFunction(routes: any) {
-  return async (...args) =>
+const loader = (routes: any) => {
+  return async (...args: any) =>
     routes()
-      .then((mod) => mod?.loader)
+      .then((mod: { loader: any }) => mod?.loader)
       .then((res) => (res === undefined ? null : res?.(...args)));
-}
+};
 
 import.meta.glob("/src/styles/*.(scss|css)", { eager: true });
 
@@ -63,8 +62,8 @@ const eagerRoutes = Object.keys(EAGER_ROUTES)
     return {
       path: pathExtractor(route),
       component: EAGER_ROUTES[route].default,
-      loader: loaderFunction(module),
-      action: actionFunction(module),
+      loader: loader(module),
+      action: action(module),
       preload: module,
     };
   });
@@ -74,24 +73,22 @@ export const lazyRoutes = Object.keys(LAZY_ROUTES).map((route) => {
   return {
     path: pathExtractor(route).replace(/\.lazy/, ""),
     component: lazy(module),
-    loader: loaderFunction(module),
-    action: actionFunction(module),
+    loader: loader(module),
+    action: action(module),
     preload: module,
   };
 });
 
-export const protectedRoutes = Object.keys(PROTECTED_ROUTES).map((route) => {
+const protectedRoutes = Object.keys(PROTECTED_ROUTES).map((route) => {
   const module = PROTECTED_ROUTES[route];
   return {
     path: pathExtractor(route).replace(/\.protected/, ""),
     component: lazy(module),
-    loader: loaderFunction(module),
-    action: actionFunction(module),
+    loader: loader(module),
+    action: action(module),
     preload: module,
   };
 });
-
-const routes = [...eagerRoutes, ...lazyRoutes];
 
 if (Object.keys(ROUTES).length === 0) console.error("No routes found");
 
@@ -108,28 +105,15 @@ const App = preserved?.["app"] || Fragment;
 const NotFound = preserved?.["notFound"] || Fragment;
 const Loading = preserved?.["loading"] || Fragment;
 const Protected = preserved?.["protected"] || Fragment;
+
 const Router = () => (
   <Suspense fallback={<Loading />}>
-    <Partytown debug={true} forward={["dataLayer.push"]} />
     <RouterProvider
       router={createBrowserRouter(
         createRoutesFromElements(
           <Route path="/" element={<App />}>
-            {routes?.map(
-              ({ path, component: Component = Fragment, loader, action }) => {
-                return (
-                  <Route
-                    key={path}
-                    path={path}
-                    element={<Component />}
-                    loader={loader}
-                    action={action}
-                  />
-                );
-              }
-            )}
-            <Route path="/" element={<Protected />}>
-              {protectedRoutes?.map(
+            {eagerRoutes?.length > 0 &&
+              eagerRoutes?.map(
                 ({ path, component: Component = Fragment, loader, action }) => {
                   return (
                     <Route
@@ -142,7 +126,42 @@ const Router = () => (
                   );
                 }
               )}
-            </Route>
+            {lazyRoutes?.length > 0 &&
+              lazyRoutes?.map(
+                ({ path, component: Component = Fragment, loader, action }) => {
+                  return (
+                    <Route
+                      key={path}
+                      path={path}
+                      element={<Component />}
+                      loader={loader}
+                      action={action}
+                    />
+                  );
+                }
+              )}
+            {protectedRoutes?.length > 0 && (
+              <Route path="/" element={<Protected />}>
+                {protectedRoutes?.map(
+                  ({
+                    path,
+                    component: Component = Fragment,
+                    loader,
+                    action,
+                  }) => {
+                    return (
+                      <Route
+                        key={path}
+                        path={path}
+                        element={<Component />}
+                        loader={loader}
+                        action={action}
+                      />
+                    );
+                  }
+                )}
+              </Route>
+            )}
             <Route path="*" element={<NotFound />} />
           </Route>
         )
