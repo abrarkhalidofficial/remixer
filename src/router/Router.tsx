@@ -32,11 +32,16 @@ const loader = (routes: any) => {
 
 import.meta.glob("/src/styles/*.(scss|css)", { eager: true });
 
-const ROUTES = import.meta.glob("/src/screens/**/[a-z[]*.jsx");
+const ROUTES = import.meta.glob(
+  "/src/screens/**/[a-z[]*[^.lazy][^.protected].jsx"
+);
 
-const EAGER_ROUTES = import.meta.glob("/src/screens/**/[a-z[]*.jsx", {
-  eager: true,
-});
+const EAGER_ROUTES = import.meta.glob(
+  "/src/screens/**/[a-z[]*[^.lazy][^.protected].jsx",
+  {
+    eager: true,
+  }
+);
 const LAZY_ROUTES = import.meta.glob("/src/screens/**/[a-z[]*.lazy.jsx");
 const PROTECTED_ROUTES = import.meta.glob(
   "/src/screens/**/[a-z[]*.protected.jsx"
