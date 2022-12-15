@@ -1,6 +1,7 @@
 {
   "files.exclude": {
     "**/router": true,
-    "**/tsconfig.json": true
+    "**/tsconfig.json": true,
+    "**/vite.config.ts": true
   }
 }
