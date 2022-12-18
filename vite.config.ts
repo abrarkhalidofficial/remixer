@@ -1,7 +1,6 @@
 import { ViteWebfontDownload } from "vite-plugin-webfont-dl";
 import { chunkSplitPlugin } from "vite-plugin-chunk-split";
 import { defineConfig } from "vite";
-import { imagetools } from "vite-imagetools";
 import path from "path";
 import react from "@vitejs/plugin-react";
 import viteCompression from "vite-plugin-compression";
@@ -33,7 +32,6 @@ export default defineConfig({
     react(),
     ViteWebfontDownload(),
     chunkSplitPlugin(),
-    imagetools(),
     viteCompression({
       algorithm: "brotliCompress",
       threshold: 100,
