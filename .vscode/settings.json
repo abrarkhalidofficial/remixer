@@ -3,6 +3,7 @@
     "**/router": true,
     "**/main.tsx": true,
     "**/tsconfig.json": true,
-    "**/vite.config.ts": true
+    "**/vite.config.ts": true,
+    "**/auto-imports.d.ts": true
   }
 }

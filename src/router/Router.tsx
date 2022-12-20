@@ -23,7 +23,6 @@ const EAGER_ROUTES = import.meta.glob(
   }
 );
 
-console.log(EAGER_ROUTES);
 const LAZY_ROUTES = import.meta.glob("/src/screens/**/[a-z[]*.lazy.jsx");
 const PROTECTED_ROUTES = import.meta.glob(
   "/src/screens/**/[a-z[]*.protected.jsx"
