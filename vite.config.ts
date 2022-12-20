@@ -34,6 +34,7 @@ export default defineConfig({
     ViteWebfontDownload(),
     chunkSplitPlugin(),
     autoImport({
+      dts: false,
       defaultExportByFilename: true,
       dirs: ["src/components"],
     }),
