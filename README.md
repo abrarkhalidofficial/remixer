@@ -48,10 +48,6 @@ Why i built this?
 
 Liked nextjs a lot but dont need complexity of ssr and backend stuff only wanted a handful of features like file based routing with an easy way to switch between eager, lazy and protected on route bases with the ability to flaten routes when needed and ability to preload routes based on links also to import style files automatically and some helpers with other imports just want to make creating react based apps easy
 
-## ToDo's
-
-[X] make it easy to find unused code
-
 ## Author
 
 - [@mehfoozurrehman](https://www.github.com/mehfoozurrehman)
