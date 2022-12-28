@@ -13,11 +13,11 @@ import { pathExtractor } from "./pathExtractor";
 import.meta.glob("/src/styles/*.(scss|css)", { eager: true });
 
 const ROUTES = import.meta.glob(
-  "/src/screens/**/[a-z[][^.lazy|^.protected]*.jsx"
+  "/src/screens/**/[a-z[]*[^.lazy|^.protected].jsx"
 );
 
 const EAGER_ROUTES = import.meta.glob(
-  "/src/screens/**/[a-z[][^.lazy|^.protected]*.jsx",
+  "/src/screens/**/[a-z[]*[^.lazy|^.protected].jsx",
   {
     eager: true,
   }
