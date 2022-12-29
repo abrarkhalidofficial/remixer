@@ -12,26 +12,32 @@ import { pathExtractor } from "./pathExtractor";
 
 import.meta.glob("/src/styles/*.(scss|css)", { eager: true });
 
-const ROUTES = import.meta.glob(
-  "/src/screens/**/[a-z[]*[^.lazy|^.protected].jsx"
+const PRESERVED = import.meta.glob(
+  "/src/layouts/(app|notFound|loading|protected).jsx",
+  { eager: true }
 );
 
+const ROUTES = import.meta.glob([
+  "/src/screens/**/[a-z[]*.jsx",
+  "!/src/screens/**/[a-z[]*.lazy.jsx",
+  "!/src/screens/**/[a-z[]*.protected.jsx",
+]);
+
 const EAGER_ROUTES = import.meta.glob(
-  "/src/screens/**/[a-z[]*[^.lazy|^.protected].jsx",
+  [
+    "/src/screens/**/[a-z[]*.jsx",
+    "!/src/screens/**/[a-z[]*.lazy.jsx",
+    "!/src/screens/**/[a-z[]*.protected.jsx",
+  ],
   {
     eager: true,
   }
 );
-
 const LAZY_ROUTES = import.meta.glob("/src/screens/**/[a-z[]*.lazy.jsx");
 const PROTECTED_ROUTES = import.meta.glob(
   "/src/screens/**/[a-z[]*.protected.jsx"
 );
 
-const PRESERVED = import.meta.glob(
-  "/src/layouts/(app|notFound|loading|protected).jsx",
-  { eager: true }
-);
 const preserved = Object.keys(PRESERVED).reduce(
   (preserved, file) => ({
     ...preserved,
@@ -40,19 +46,16 @@ const preserved = Object.keys(PRESERVED).reduce(
   {}
 );
 
-const eagerRoutes = Object.keys(EAGER_ROUTES)
-  .filter((route) => !route.includes(".lazy"))
-  .filter((route) => !route.includes(".protected"))
-  .map((route) => {
-    const module = ROUTES[route];
-    return {
-      path: pathExtractor(route),
-      element: EAGER_ROUTES[route].default,
-      loader: loader(module),
-      action: action(module),
-      preload: module,
-    };
-  });
+const eagerRoutes = Object.keys(EAGER_ROUTES).map((route) => {
+  const module = ROUTES[route];
+  return {
+    path: pathExtractor(route),
+    element: EAGER_ROUTES[route].default,
+    loader: loader(module),
+    action: action(module),
+    preload: module,
+  };
+});
 
 export const lazyRoutes = Object.keys(LAZY_ROUTES).map((route) => {
   const module = LAZY_ROUTES[route];
@@ -100,46 +103,40 @@ const Router = () => (
           <Route path="/" element={<App />}>
             {eagerRoutes?.length > 0 &&
               eagerRoutes?.map(
-                ({ path, element: Component = Fragment, loader, action }) => {
-                  return (
-                    <Route
-                      key={path}
-                      path={path}
-                      element={<Component />}
-                      loader={loader}
-                      action={action}
-                    />
-                  );
-                }
+                ({ path, element: Component = Fragment, loader, action }) => (
+                  <Route
+                    key={path}
+                    path={path}
+                    element={<Component />}
+                    loader={loader}
+                    action={action}
+                  />
+                )
               )}
             {lazyRoutes?.length > 0 &&
               lazyRoutes?.map(
-                ({ path, element: Component = Fragment, loader, action }) => {
-                  return (
-                    <Route
-                      key={path}
-                      path={path}
-                      element={<Component />}
-                      loader={loader}
-                      action={action}
-                    />
-                  );
-                }
+                ({ path, element: Component = Fragment, loader, action }) => (
+                  <Route
+                    key={path}
+                    path={path}
+                    element={<Component />}
+                    loader={loader}
+                    action={action}
+                  />
+                )
               )}
             {protectedRoutes?.length > 0 && (
               <Route path="/" element={<Protected />}>
                 {protectedRoutes?.map(
-                  ({ path, element: Component = Fragment, loader, action }) => {
-                    return (
-                      <Route
-                        key={path}
-                        path={path}
-                        element={<Component />}
-                        loader={loader}
-                        action={action}
-                      />
-                    );
-                  }
+                  ({ path, element: Component = Fragment, loader, action }) => (
+                    <Route
+                      key={path}
+                      path={path}
+                      element={<Component />}
+                      loader={loader}
+                      action={action}
+                    />
+                  )
                 )}
               </Route>
             )}
