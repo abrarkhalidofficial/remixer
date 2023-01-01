@@ -9,6 +9,7 @@ import {
 import { action } from "./action";
 import { loader } from "./loader";
 import { pathExtractor } from "./pathExtractor";
+import { routerMap } from "./routerMap";
 
 import.meta.glob("/src/styles/*.(scss|css)", { eager: true });
 
@@ -100,16 +101,6 @@ const App = preserved?.["app"] || Fragment;
 const NotFound = preserved?.["notFound"] || Fragment;
 const Loading = preserved?.["loading"] || Fragment;
 const Protected = preserved?.["protected"] || Fragment;
-
-const routerMap = ({ path, element: Component = Fragment, loader, action }) => (
-  <Route
-    key={path}
-    path={path}
-    element={<Component />}
-    loader={loader}
-    action={action}
-  />
-);
 
 const Router = () => (
   <Suspense fallback={<Loading />}>
