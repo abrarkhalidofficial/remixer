@@ -36,7 +36,7 @@ export default defineConfig({
     chunkSplitPlugin(),
     ViteWebfontDownload(),
     mix.default({
-      handler: "./src/router/handler.ts",
+      handler: "./src/layouts/api.jsx",
     }),
     ,
     viteCompression({
