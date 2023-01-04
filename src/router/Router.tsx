@@ -1,4 +1,4 @@
-import { Fragment, Suspense, lazy } from "react";
+import { Fragment, Suspense } from "react";
 import {
   Route,
   RouterProvider,
@@ -6,9 +6,8 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 
-import { action } from "./action";
-import { loader } from "./loader";
-import { pathExtractor } from "./pathExtractor";
+import { mapEagerRoutes } from "./mapEagerRoutes";
+import { mapLazyRoutes } from "./mapLazyRoutes";
 import { routerMap } from "./routerMap";
 
 import.meta.glob("/src/styles/*.(scss|css)", { eager: true });
@@ -18,7 +17,7 @@ const PRESERVED = import.meta.glob(
   { eager: true }
 );
 
-const ROUTES = import.meta.glob([
+export const ROUTES = import.meta.glob([
   "/src/screens/**/[a-z[]*.(jsx|tsx)",
   "!/src/screens/**/[a-z[]*.lazy.(jsx|tsx)",
   "!/src/screens/**/[a-z[]*.protected.(jsx|tsx)",
@@ -29,7 +28,14 @@ const EAGER_ROUTES = import.meta.glob(
     "/src/screens/**/[a-z[]*.(jsx|tsx)",
     "!/src/screens/**/[a-z[]*.lazy.(jsx|tsx)",
     "!/src/screens/**/[a-z[]*.protected.(jsx|tsx)",
+    "!/src/screens/**/[a-z[]*.layout.(jsx|tsx)",
   ],
+  {
+    eager: true,
+  }
+);
+const LAYOUT_ROUTES = import.meta.glob(
+  "/src/screens/**/[a-z[]*.layout.(jsx|tsx)",
   {
     eager: true,
   }
@@ -48,38 +54,10 @@ const preserved = Object.keys(PRESERVED).reduce(
   {}
 );
 
-const eagerRoutes = Object.keys(EAGER_ROUTES).map((route) => {
-  const module = ROUTES[route];
-  return {
-    path: pathExtractor(route),
-    element: EAGER_ROUTES[route].default,
-    loader: loader(module),
-    action: action(module),
-    preload: module,
-  };
-});
-
-export const lazyRoutes = Object.keys(LAZY_ROUTES).map((route) => {
-  const module = LAZY_ROUTES[route];
-  return {
-    path: pathExtractor(route).replace(/\.lazy/, ""),
-    element: lazy(module),
-    loader: loader(module),
-    action: action(module),
-    preload: module,
-  };
-});
-
-const protectedRoutes = Object.keys(PROTECTED_ROUTES).map((route) => {
-  const module = PROTECTED_ROUTES[route];
-  return {
-    path: pathExtractor(route).replace(/\.protected/, ""),
-    element: lazy(module),
-    loader: loader(module),
-    action: action(module),
-    preload: module,
-  };
-});
+export const lazyRoutes = mapLazyRoutes(LAZY_ROUTES, /\.lazy/);
+const eagerRoutes = mapEagerRoutes(EAGER_ROUTES, /\.jsx|\.tsx/);
+export const layoutRoutes = mapEagerRoutes(LAYOUT_ROUTES, /\.layout/);
+const protectedRoutes = mapLazyRoutes(PROTECTED_ROUTES, /\.protected/);
 
 if (
   Object.keys(ROUTES).length === 0 &&
@@ -102,25 +80,25 @@ const NotFound = preserved?.["notFound"] || Fragment;
 const Loading = preserved?.["loading"] || Fragment;
 const Protected = preserved?.["protected"] || Fragment;
 
-const Router = () => (
-  <Suspense fallback={<Loading />}>
-    <RouterProvider
-      router={createBrowserRouter(
-        createRoutesFromElements(
-          <Route path="/" element={<App />}>
-            {eagerRoutes?.length > 0 && eagerRoutes?.map(routerMap)}
-            {lazyRoutes?.length > 0 && lazyRoutes?.map(routerMap)}
-            {protectedRoutes?.length > 0 && (
-              <Route path="/" element={<Protected />}>
-                {protectedRoutes?.map(routerMap)}
-              </Route>
-            )}
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        )
-      )}
-    />
-  </Suspense>
-);
-
-export default Router;
+export default function Router() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <RouterProvider
+        router={createBrowserRouter(
+          createRoutesFromElements(
+            <Route path="/" element={<App />}>
+              {eagerRoutes?.length > 0 && eagerRoutes?.map(routerMap)}
+              {lazyRoutes?.length > 0 && lazyRoutes?.map(routerMap)}
+              {protectedRoutes?.length > 0 && (
+                <Route path="/" element={<Protected />}>
+                  {protectedRoutes?.map(routerMap)}
+                </Route>
+              )}
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          )
+        )}
+      />
+    </Suspense>
+  );
+}
