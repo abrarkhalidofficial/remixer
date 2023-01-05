@@ -6,9 +6,10 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 
-import { mapEagerRoutes } from "./mapEagerRoutes";
+import { action } from "./action";
+import { loader } from "./loader";
 import { mapLazyRoutes } from "./mapLazyRoutes";
-import { routerMap } from "./routerMap";
+import { pathExtractor } from "./pathExtractor";
 
 import.meta.glob("/src/styles/*.(scss|css)", { eager: true });
 
@@ -17,10 +18,11 @@ const PRESERVED = import.meta.glob(
   { eager: true }
 );
 
-export const ROUTES = import.meta.glob([
+const ROUTES = import.meta.glob([
   "/src/screens/**/[a-z[]*.(jsx|tsx)",
   "!/src/screens/**/[a-z[]*.lazy.(jsx|tsx)",
   "!/src/screens/**/[a-z[]*.protected.(jsx|tsx)",
+  "!/src/screens/**/[a-z[]*.layout.(jsx|tsx)",
 ]);
 
 const EAGER_ROUTES = import.meta.glob(
@@ -34,13 +36,10 @@ const EAGER_ROUTES = import.meta.glob(
     eager: true,
   }
 );
-const LAYOUT_ROUTES = import.meta.glob(
-  "/src/screens/**/[a-z[]*.layout.(jsx|tsx)",
-  {
-    eager: true,
-  }
-);
 const LAZY_ROUTES = import.meta.glob("/src/screens/**/[a-z[]*.lazy.(jsx|tsx)");
+const LAYOUT_ROUTES = import.meta.glob(
+  "/src/screens/**/[a-z[]*.layout.(jsx|tsx)"
+);
 const PROTECTED_ROUTES = import.meta.glob(
   "/src/screens/**/[a-z[]*.protected.(jsx|tsx)"
 );
@@ -53,11 +52,61 @@ const preserved = Object.keys(PRESERVED).reduce(
   }),
   {}
 );
+const eagerRoutes = Object.keys(EAGER_ROUTES).map((route) => {
+  const module = ROUTES[route];
+  return {
+    path: pathExtractor(route),
+    element: EAGER_ROUTES[route].default,
+    loader: loader(module),
+    action: action(module),
+    preload: module,
+  };
+});
+const lazyRoutes = mapLazyRoutes(LAZY_ROUTES, /\.lazy/, "");
+const layoutRoutes = mapLazyRoutes(LAYOUT_ROUTES, /\.layout/, "/");
+const protectedRoutes = mapLazyRoutes(PROTECTED_ROUTES, /\.protected/, "");
 
-export const lazyRoutes = mapLazyRoutes(LAZY_ROUTES, /\.lazy/);
-const eagerRoutes = mapEagerRoutes(EAGER_ROUTES, /\.jsx|\.tsx/);
-export const layoutRoutes = mapEagerRoutes(LAYOUT_ROUTES, /\.layout/);
-const protectedRoutes = mapLazyRoutes(PROTECTED_ROUTES, /\.protected/);
+export const getMatchingRoute = (path: string) =>
+  lazyRoutes.find(
+    (route) =>
+      path.match(new RegExp(route.path.replace(/:\w+|\*/g, ".*")))?.[0] === path
+  );
+
+const routerMap = ({ path, element: Component = Fragment, loader, action }) =>
+  layoutRoutes
+    .map((route) => route.path.replace(".layout", ""))
+    .includes(path) ? (
+    layoutRoutes
+      .filter((route) => route.path === path)
+      .map((route) => {
+        let ParentComponent = route.element;
+        return (
+          <Route
+            key={route.path}
+            path={route.path}
+            element={<ParentComponent />}
+            loader={route.loader}
+            action={route.action}
+          >
+            <Route
+              key={path}
+              path={path}
+              element={<Component />}
+              loader={loader}
+              action={action}
+            />
+          </Route>
+        );
+      })
+  ) : (
+    <Route
+      key={path}
+      path={path}
+      element={<Component />}
+      loader={loader}
+      action={action}
+    />
+  );
 
 if (
   Object.keys(ROUTES).length === 0 &&

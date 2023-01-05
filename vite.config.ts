@@ -38,11 +38,6 @@ export default ({ mode }) => {
       hotExport(),
       chunkSplitPlugin(),
       ViteWebfontDownload(),
-      process.env.VITE_BUILD_MODE === "ssr"
-        ? mix.default({
-            handler: "./src/layouts/api.jsx",
-          })
-        : null,
       viteCompression({
         algorithm: "brotliCompress",
         threshold: 100,
@@ -90,6 +85,11 @@ export default ({ mode }) => {
           ],
         },
       }),
+      process.env.VITE_BUILD_MODE === "ssr"
+        ? mix.default({
+            handler: "./src/layouts/api.jsx",
+          })
+        : null,
     ],
   });
 };

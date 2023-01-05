@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { NavLink as RouterLink } from "react-router-dom";
-import { getMatchingRoute } from "./getMatchingRoute";
+import { getMatchingRoute } from "./Router";
 
 interface Props {
   children: React.ReactNode;
