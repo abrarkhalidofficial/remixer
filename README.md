@@ -2,7 +2,9 @@
 
 ## Description
 
-Base react app with file base routing with vite as build tool and other small things to speed up starting projects
+A starter for react apps to make development faster it has file based routing, flaten routes, lazy routes, protected routes, layout routes, asset optimization, auto component & asset export, auto style imports for sass or css, ssr and csr support, optional express handler for developing apis, prefetching support, head component
+
+just wanted to make nextjs like features but liked remix styles better so here it is 💖
 
 ## Table of Contents
 
@@ -37,16 +39,6 @@ MIT | Feel free to use this for your own projects
 ## Contributions
 
 Just do it any help would be appriciated
-
-## Tech Stack
-
-React, Vite, Sass, React-router-dom
-
-## Questions
-
-Why i built this?
-
-Liked nextjs a lot but dont need complexity of ssr and backend stuff only wanted a handful of features like file based routing with an easy way to switch between eager, lazy and protected on route bases with the ability to flaten routes when needed and ability to preload routes based on links also to import style files automatically and some helpers with other imports just want to make creating react based apps easy
 
 ## Author
 
