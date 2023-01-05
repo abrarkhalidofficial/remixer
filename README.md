@@ -48,6 +48,8 @@ MIT | Feel free to use this for your own projects
 
 Just do it any help would be appriciated
 
+[] documentation
+
 ## Author
 
 - [@mehfoozurrehman](https://www.github.com/mehfoozurrehman)
