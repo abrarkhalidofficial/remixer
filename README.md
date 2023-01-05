@@ -16,27 +16,27 @@ just wanted to make nextjs like features but liked remix styles better so here i
 
 ## Usage
 
-### `yarn install`
+#### `yarn install`
 
 installing dependencies
 
-### `yarn dev`
+#### `yarn dev`
 
 starting a development server
 
 for ssr
-### `yarn build` with VITE_BUILD_MODE=ssr in .env
+#### `yarn build with VITE_BUILD_MODE=ssr in .env`
 
 for csr
-### `yarn build` with VITE_BUILD_MODE=csr in .env
+#### `yarn build with VITE_BUILD_MODE=csr in .env`
 
 making a production build
 
 for ssr
-### `yarn start`
+#### `yarn start`
 
 for csr
-### `yarn preview`
+#### `yarn preview`
 
 starting a production server
 
