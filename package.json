@@ -13,7 +13,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
-    "react-router-dom": "6.6.1"
+    "react-router-dom": "6.6.2"
   },
   "devDependencies": {
     "express": "^4.18.2",
@@ -29,6 +29,6 @@
     "vite-plugin-hot-export": "^0.5.9",
     "vite-plugin-imagemin": "^0.6.1",
     "vite-plugin-mix": "^0.4.0",
-    "vite-plugin-webfont-dl": "^3.4.2"
+    "vite-plugin-webfont-dl": "^3.4.3"
   }
 }
