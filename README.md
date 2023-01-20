@@ -25,17 +25,21 @@ installing dependencies
 starting a development server
 
 for ssr
+
 #### `yarn build with VITE_BUILD_MODE=ssr in .env`
 
 for csr
+
 #### `yarn build with VITE_BUILD_MODE=csr in .env`
 
 making a production build
 
 for ssr
+
 #### `yarn start`
 
 for csr
+
 #### `yarn preview`
 
 starting a production server
