@@ -1,15 +1,8 @@
-import { Fragment, Suspense } from "react";
-import {
-  Route,
-  RouterProvider,
-  createBrowserRouter,
-  createRoutesFromElements,
-} from "react-router-dom";
+import { Fragment, Suspense, lazy } from "react";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import { action } from "./action";
 import { loader } from "./loader";
-import { mapLazyRoutes } from "./mapLazyRoutes";
-import { pathExtractor } from "./pathExtractor";
 
 import.meta.glob("/src/styles/*.(scss|css)", { eager: true });
 
@@ -17,29 +10,22 @@ const PRESERVED = import.meta.glob(
   "/src/layouts/(app|notFound|loading|protected).(jsx|tsx)",
   { eager: true }
 );
-
 const ROUTES = import.meta.glob([
   "/src/screens/**/[a-z[]*.(jsx|tsx)",
   "!/src/screens/**/[a-z[]*.lazy.(jsx|tsx)",
   "!/src/screens/**/[a-z[]*.protected.(jsx|tsx)",
-  "!/src/screens/**/[a-z[]*.layout.(jsx|tsx)",
 ]);
-
 const EAGER_ROUTES = import.meta.glob(
   [
     "/src/screens/**/[a-z[]*.(jsx|tsx)",
     "!/src/screens/**/[a-z[]*.lazy.(jsx|tsx)",
     "!/src/screens/**/[a-z[]*.protected.(jsx|tsx)",
-    "!/src/screens/**/[a-z[]*.layout.(jsx|tsx)",
   ],
   {
     eager: true,
   }
 );
 const LAZY_ROUTES = import.meta.glob("/src/screens/**/[a-z[]*.lazy.(jsx|tsx)");
-const LAYOUT_ROUTES = import.meta.glob(
-  "/src/screens/**/[a-z[]*.layout.(jsx|tsx)"
-);
 const PROTECTED_ROUTES = import.meta.glob(
   "/src/screens/**/[a-z[]*.protected.(jsx|tsx)"
 );
@@ -52,60 +38,196 @@ const preserved = Object.keys(PRESERVED).reduce(
   }),
   {}
 );
-const eagerRoutes = Object.keys(EAGER_ROUTES).map((route) => {
-  const module = ROUTES[route];
-  return {
-    path: pathExtractor(route),
-    element: EAGER_ROUTES[route].default,
+const eagerRoutes = Object.keys(EAGER_ROUTES).reduce((routes, key) => {
+  const module = ROUTES[key];
+
+  const Component = EAGER_ROUTES[key].default || Fragment;
+
+  const route: Route = {
+    element: <Component />,
     loader: loader(module),
     action: action(module),
     preload: module,
   };
-});
-const lazyRoutes = mapLazyRoutes(LAZY_ROUTES, /\.lazy/, "");
-const layoutRoutes = mapLazyRoutes(LAYOUT_ROUTES, /\.layout/, "/");
-const protectedRoutes = mapLazyRoutes(PROTECTED_ROUTES, /\.protected/, "");
+
+  const segments = key
+    .replace(/\/src\/screens|\.jsx|\.tsx$/g, "")
+    .replace(/\[\.{3}.+\]/, "*")
+    .replace(/\[(.+)\]/, ":$1")
+    .split("/")
+    .filter((p) => !p.includes("_"))
+    .filter(Boolean);
+
+  segments.reduce((parent, segment, index) => {
+    const path = segment.replace(/index|\./g, "");
+    const root = index === 0;
+    const leaf = index === segments.length - 1 && segments.length > 1;
+    const node = !root && !leaf;
+    const insert = /^\w|\//.test(path) ? "unshift" : "push";
+
+    if (root) {
+      const dynamic = path.startsWith("[") || path === "*";
+      if (dynamic) return parent;
+
+      const last = segments.length === 1;
+      if (last) {
+        routes.push({ path, ...route });
+        return parent;
+      }
+    }
+    if (root || node) {
+      const current = root ? routes : parent.children;
+      const found = current?.find((route) => route.path === path);
+      if (found) found.children ??= [];
+      else
+        current?.[insert]({
+          path: path,
+          children: [],
+        });
+      return found || current?.[insert === "unshift" ? 0 : current.length - 1];
+    }
+
+    if (leaf) {
+      parent?.children?.[insert]({
+        path: path.replace(/\/$/, ""),
+        ...route,
+      });
+    }
+
+    return parent;
+  }, {});
+
+  return routes;
+}, []);
+const lazyRoutes = Object.keys(LAZY_ROUTES).reduce((routes, key) => {
+  const module = LAZY_ROUTES[key];
+
+  const Component = () => lazy(module) || Fragment;
+
+  const route: Route = {
+    element: <Component />,
+    loader: loader(module),
+    action: action(module),
+    preload: module,
+  };
+
+  const segments = key
+    .replace(/\/src\/screens|\.jsx|\.tsx$/g, "")
+    .replace(/\[\.{3}.+\]/, "*")
+    .replace(/\[(.+)\]/, ":$1")
+    .replace(/\.lazy/, "")
+    .split("/")
+    .filter((p) => !p.includes("_"))
+    .filter(Boolean);
+
+  segments.reduce((parent, segment, index) => {
+    const path = segment.replace(/index|\./g, "");
+    const root = index === 0;
+    const leaf = index === segments.length - 1 && segments.length > 1;
+    const node = !root && !leaf;
+    const insert = /^\w|\//.test(path) ? "unshift" : "push";
+
+    if (root) {
+      const dynamic = path.startsWith("[") || path === "*";
+      if (dynamic) return parent;
+
+      const last = segments.length === 1;
+      if (last) {
+        routes.push({ path, ...route });
+        return parent;
+      }
+    }
+    if (root || node) {
+      const current = root ? routes : parent.children;
+      const found = current?.find((route) => route.path === path);
+      if (found) found.children ??= [];
+      else
+        current?.[insert]({
+          path: path,
+          children: [],
+        });
+      return found || current?.[insert === "unshift" ? 0 : current.length - 1];
+    }
+
+    if (leaf) {
+      parent?.children?.[insert]({
+        path: path.replace(/\/$/, ""),
+        ...route,
+      });
+    }
+
+    return parent;
+  }, {});
+
+  return routes;
+}, []);
+const protectedRoutes = Object.keys(PROTECTED_ROUTES).reduce((routes, key) => {
+  const module = PROTECTED_ROUTES[key];
+
+  const Component = () => lazy(module) || Fragment;
+
+  const route: Route = {
+    element: <Component />,
+    loader: loader(module),
+    action: action(module),
+    preload: module,
+  };
+
+  const segments = key
+    .replace(/\/src\/screens|\.jsx|\.tsx$/g, "")
+    .replace(/\[\.{3}.+\]/, "*")
+    .replace(/\[(.+)\]/, ":$1")
+    .replace(/\.protected/, "")
+    .split("/")
+    .filter((p) => !p.includes("_"))
+    .filter(Boolean);
+
+  segments.reduce((parent, segment, index) => {
+    const path = segment.replace(/index|\./g, "");
+    const root = index === 0;
+    const leaf = index === segments.length - 1 && segments.length > 1;
+    const node = !root && !leaf;
+    const insert = /^\w|\//.test(path) ? "unshift" : "push";
+
+    if (root) {
+      const dynamic = path.startsWith("[") || path === "*";
+      if (dynamic) return parent;
+
+      const last = segments.length === 1;
+      if (last) {
+        routes.push({ path, ...route });
+        return parent;
+      }
+    }
+    if (root || node) {
+      const current = root ? routes : parent.children;
+      const found = current?.find((route) => route.path === path);
+      if (found) found.children ??= [];
+      else
+        current?.[insert]({
+          path: path,
+          children: [],
+        });
+      return found || current?.[insert === "unshift" ? 0 : current.length - 1];
+    }
+
+    if (leaf) {
+      parent?.children?.[insert]({
+        path: path.replace(/\/$/, ""),
+        ...route,
+      });
+    }
+
+    return parent;
+  }, {});
+
+  return routes;
+}, []);
 
 export const getMatchingRoute = (path: string) =>
   lazyRoutes.find(
     (route) =>
       path.match(new RegExp(route.path.replace(/:\w+|\*/g, ".*")))?.[0] === path
-  );
-
-const routerMap = ({ path, element: Component = Fragment, loader, action }) =>
-  layoutRoutes
-    .map((route) => route.path.replace(".layout", ""))
-    .includes(path) ? (
-    layoutRoutes
-      .filter((route) => route.path === path)
-      .map((route) => {
-        let ParentComponent = route.element;
-        return (
-          <Route
-            key={route.path}
-            path={route.path}
-            element={<ParentComponent />}
-            loader={route.loader}
-            action={route.action}
-          >
-            <Route
-              key={path}
-              path={path}
-              element={<Component />}
-              loader={loader}
-              action={action}
-            />
-          </Route>
-        );
-      })
-  ) : (
-    <Route
-      key={path}
-      path={path}
-      element={<Component />}
-      loader={loader}
-      action={action}
-    />
   );
 
 if (
@@ -133,20 +255,18 @@ export default function Router() {
   return (
     <Suspense fallback={<Loading />}>
       <RouterProvider
-        router={createBrowserRouter(
-          createRoutesFromElements(
-            <Route path="/" element={<App />}>
-              {eagerRoutes?.length > 0 && eagerRoutes?.map(routerMap)}
-              {lazyRoutes?.length > 0 && lazyRoutes?.map(routerMap)}
-              {protectedRoutes?.length > 0 && (
-                <Route path="/" element={<Protected />}>
-                  {protectedRoutes?.map(routerMap)}
-                </Route>
-              )}
-              <Route path="*" element={<NotFound />} />
-            </Route>
-          )
-        )}
+        router={createBrowserRouter([
+          {
+            path: "/",
+            element: <App />,
+            children: [
+              ...eagerRoutes,
+              ...lazyRoutes,
+              { path: "", element: <Protected />, children: protectedRoutes },
+            ],
+          },
+          { path: "*", element: <NotFound /> },
+        ])}
       />
     </Suspense>
   );
