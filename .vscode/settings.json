@@ -5,6 +5,7 @@
     "**/index.ts": true,
     "**/tsconfig.json": true,
     "**/vite.config.ts": true,
-    "**/export.config.ts": true
+    "**/.prettierignore": true,
+    "**/export.config.ts": true,
   }
 }

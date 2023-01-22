@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "rm -rf dist && rm -rf build && vite build",
     "preview": "vite preview",
-    "start": "node build/server.js"
+    "start": "node build/server.js",
+    "prettify": "prettier . --write .",
+    "build": "rm -rf dist && rm -rf build && vite build"
   },
   "dependencies": {
     "react": "^18.2.0",
