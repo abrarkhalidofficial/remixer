@@ -1,4 +1,4 @@
-# react-starter
+# remixer
 
 ## Description
 
