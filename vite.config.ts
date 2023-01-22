@@ -5,7 +5,7 @@ import { chunkSplitPlugin } from "vite-plugin-chunk-split";
 import hotExport from "vite-plugin-hot-export";
 import mix from "vite-plugin-mix";
 import path from "path";
-import react from "@vitejs/plugin-react-swc";
+import react from "@vitejs/plugin-react";
 import viteCompression from "vite-plugin-compression";
 import viteImagemin from "vite-plugin-imagemin";
 

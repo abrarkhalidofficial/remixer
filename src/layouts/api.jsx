@@ -9,7 +9,11 @@ const apiRoutes = Object.keys(API_ROUTES).map(
 
 const app = express();
 
-apiRoutes.map((route) => {
+app.get("/", (_req, res) => {
+  res.send("Welcome to the Remixer API!");
+});
+
+apiRoutes?.map((route) => {
   app.use("/api/", route);
 });
 
