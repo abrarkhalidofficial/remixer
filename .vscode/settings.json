@@ -7,5 +7,6 @@
     "**/vite.config.ts": true,
     "**/.prettierignore": true,
     "**/export.config.ts": true,
+    "**/postcss.config.js": true,
   }
 }
