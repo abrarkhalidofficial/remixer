@@ -102,8 +102,8 @@ const eagerRoutes = Object.keys(EAGER_ROUTES).reduce((routes, key) => {
 const lazyRoutes = Object.keys(LAZY_ROUTES).reduce((routes, key) => {
   const module = LAZY_ROUTES[key];
 
-  const Component = () => lazy(module) || Fragment;
-
+  const Component = lazy(module) || Fragment;
+  console.log(Component);
   const route: Route = {
     element: <Component />,
     loader: loader(module),
@@ -164,7 +164,7 @@ const lazyRoutes = Object.keys(LAZY_ROUTES).reduce((routes, key) => {
 const protectedRoutes = Object.keys(PROTECTED_ROUTES).reduce((routes, key) => {
   const module = PROTECTED_ROUTES[key];
 
-  const Component = () => lazy(module) || Fragment;
+  const Component = lazy(module) || Fragment;
 
   const route: Route = {
     element: <Component />,
