@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 export default function App() {
   const title = "Remixer";
   const description = "Remixer";
-  const image = "/vite.svg";
+  const image = "/favicon.svg";
   const url = "https://vitefilerouter.com";
   return (
     <>
