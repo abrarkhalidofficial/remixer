@@ -8,7 +8,7 @@
     "preview": "vite preview",
     "start": "node build/server.js",
     "formate": "prettier . --write .",
-    "build": "rm -rf dist && rm -rf build && vite build"
+    "build": "vite build"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -22,7 +22,6 @@
     "@types/react-dom": "^18.0.10",
     "@vitejs/plugin-react": "^3.0.1",
     "autoprefixer": "^10.4.13",
-    "express": "^4.18.2",
     "prettier": "2.8.3",
     "sass": "^1.57.1",
     "typescript": "^4.9.4",

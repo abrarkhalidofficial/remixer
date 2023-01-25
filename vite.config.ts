@@ -1,4 +1,4 @@
-import { defineConfig} from "vite";
+import { defineConfig } from "vite";
 import { ViteWebfontDownload } from "vite-plugin-webfont-dl";
 import { chunkSplitPlugin } from "vite-plugin-chunk-split";
 import hotExport from "vite-plugin-hot-export";
