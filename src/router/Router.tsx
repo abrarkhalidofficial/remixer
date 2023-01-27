@@ -1,6 +1,8 @@
 import { Fragment, Suspense } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
+import Head from "./Head";
+import { meta } from "../layouts/app";
 import { routesReducer } from "./routesReducer";
 
 import.meta.glob("/src/styles/*.(scss|css)", { eager: true });
@@ -68,9 +70,12 @@ const NotFound = preserved?.["notFound"] || Fragment;
 const Loading = preserved?.["loading"] || Fragment;
 const Protected = preserved?.["protected"] || Fragment;
 
+const { title, image, url, description } = meta;
+
 export default function Router() {
   return (
     <Suspense fallback={<Loading />}>
+      <Head title={title} image={image} url={url} description={description} />
       <RouterProvider
         router={createBrowserRouter([
           {

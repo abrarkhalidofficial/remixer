@@ -1,3 +1,5 @@
-import SvgReact from "./react.svg";
+import SvgReact from './react.svg'
 
-export { SvgReact };
+export {
+  SvgReact
+}
