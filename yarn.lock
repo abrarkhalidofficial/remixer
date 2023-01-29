@@ -1939,6 +1939,19 @@ find-versions@^3.0.0:
   dependencies:
     semver-regex "^2.0.0"
 
+flat-cache@^3.0:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/flat-cache/-/flat-cache-3.0.4.tgz#61b0338302b2fe9f957dcc32fc2a87f1c3048b11"
+  integrity sha512-dm9s5Pw7Jc0GvMYbshN6zchCA9RgQlzzEZX3vylR9IqFfS8XciblUXOKfW6SiuJ0e13eDYZoZV5wdrev7P3Nwg==
+  dependencies:
+    flatted "^3.1.0"
+    rimraf "^3.0.2"
+
+flatted@^3.1.0:
+  version "3.2.7"
+  resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.7.tgz#609f39207cb614b89d0765b477cb2d437fbf9787"
+  integrity sha512-5nqDSxl8nn5BSNxyR3n4I6eDmbolI6WT+QqR547RwxQapgjQBmtktdP+HTBb/a/zLsbzERTONyUB5pefh5TtjQ==
+
 follow-redirects@^1.0.0, follow-redirects@^1.14.0, follow-redirects@^1.15.0:
   version "1.15.2"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.2.tgz#b460864144ba63f2681096f274c4e57026da2c13"
@@ -3460,6 +3473,13 @@ rimraf@^2.5.4:
   dependencies:
     glob "^7.1.3"
 
+rimraf@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-3.0.2.tgz#f1a5402ba6220ad52cc1282bac1ae3aa49fd061a"
+  integrity sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==
+  dependencies:
+    glob "^7.1.3"
+
 rollup@^3.7.0:
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-3.7.0.tgz#7c4310378cf28764abb6b7611c9ccec081ff6d97"
@@ -4156,13 +4176,14 @@ vite-plugin-imagemin@^0.6.1:
     jpegtran-bin "^6.0.1"
     pathe "^0.2.0"
 
-vite-plugin-webfont-dl@^3.5.0:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/vite-plugin-webfont-dl/-/vite-plugin-webfont-dl-3.5.0.tgz#f8fe8e938aaf5d4893eddcb5f2b420097f97cf47"
-  integrity sha512-TBwUm9WV27ikWpvYKeBB0DjB5HLOdamZwNd2tU+CJno8tEQGdLD5laCJ/332JsJf2PT11OcmW3dbCYscZvnsog==
+vite-plugin-webfont-dl@^3.6.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/vite-plugin-webfont-dl/-/vite-plugin-webfont-dl-3.6.0.tgz#b77f52ab912ddce58f3ffe37a60ab6e4888ae885"
+  integrity sha512-3qfRrouQnBqwYZaBqjNeAkaywlZyo+VSM6jnoJk4PiOyo1/n4V4sbwby2QCTdjQwtIIsPTfggXvN6S/wuIcJdg==
   dependencies:
     axios "^1.2"
     clean-css "^5.3"
+    flat-cache "^3.0"
     picocolors "^1.0"
 
 vite@^4.0.4:
