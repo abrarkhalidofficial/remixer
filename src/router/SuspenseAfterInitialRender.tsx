@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, memo, useEffect, useState } from "react";
 
 interface Props {
   fallback: React.ReactNode;
@@ -25,10 +25,10 @@ interface LifecycleProps {
   afterRender: () => void;
 }
 
-function Lifecycle({ afterRender }: LifecycleProps) {
+const Lifecycle = memo<LifecycleProps>(({ afterRender }) => {
   useEffect(() => {
     afterRender();
   }, [afterRender]);
 
   return null;
-}
+});

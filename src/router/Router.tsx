@@ -3,7 +3,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import Head from "./Head";
 import { meta } from "../layouts/app";
-import { routesReducer } from "./routesReducer";
+import routesReducer from "./routesReducer";
 
 import.meta.glob("/src/styles/*.(scss|css)", { eager: true });
 

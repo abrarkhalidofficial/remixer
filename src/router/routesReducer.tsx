@@ -3,7 +3,7 @@ import { Fragment, lazy } from "react";
 import { action } from "./action";
 import { loader } from "./loader";
 
-export function routesReducer(
+export default function routesReducer(
   eagers: Record<string, unknown>,
   lazys: Record<string, () => Promise<unknown>>
 ) {

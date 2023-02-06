@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet";
+import { memo } from "react";
 
 interface Props {
   title: string;
@@ -8,13 +9,7 @@ interface Props {
   children?: React.ReactNode;
 }
 
-export default function Head({
-  title,
-  description,
-  url,
-  image,
-  children,
-}: Props) {
+const Head = memo(({ title, description, url, image, children }: Props) => {
   return (
     <Helmet>
       <title>{title}</title>
@@ -38,4 +33,6 @@ export default function Head({
       {children}
     </Helmet>
   );
-}
+});
+
+export default Head;

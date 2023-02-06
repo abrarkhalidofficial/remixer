@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { Link as RouterLink } from "react-router-dom";
 import { getMatchingRoute } from "./Router";
@@ -9,12 +9,7 @@ interface Props {
   prefetch?: boolean;
 }
 
-export default function Link({
-  children,
-  to,
-  prefetch = true,
-  ...props
-}: Props) {
+const Link = memo(({ children, to, prefetch = true, ...props }: Props) => {
   const ref = useRef(null);
   const [prefetched, setPrefetched] = useState(false);
 
@@ -45,4 +40,6 @@ export default function Link({
       {children}
     </RouterLink>
   );
-}
+});
+
+export default Link;
