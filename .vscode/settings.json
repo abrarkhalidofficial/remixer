@@ -1,6 +1,6 @@
 {
   "files.exclude": {
-    // "**/router": true,
+    "**/router": true,
     "**/main.tsx": true,
     "**/index.ts": true,
     "**/tsconfig.json": true,
