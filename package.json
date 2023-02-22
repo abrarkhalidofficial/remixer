@@ -5,10 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "preview": "vite preview",
-    "start": "node build/server.js",
-    "formate": "prettier . --write .",
-    "build": "vite build"
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -21,11 +19,9 @@
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^3.1.0",
-    "prettier": "2.8.4",
-    "sass": "^1.58.2",
+    "sass": "^1.58.3",
     "typescript": "^4.9.5",
-    "vite": "^4.1.2",
-    "vite-plugin-browser-sync": "^1.0.2",
+    "vite": "^4.1.4",
     "vite-plugin-chunk-split": "^0.4.7",
     "vite-plugin-compression": "^0.5.1",
     "vite-plugin-hot-export": "^0.5.9",
