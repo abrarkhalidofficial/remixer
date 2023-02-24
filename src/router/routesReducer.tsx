@@ -28,6 +28,7 @@ export default function routesReducer(
       .replace(/\[(.+)\]/, ":$1")
       .replace(/\.lazy/, "")
       .replace(/\.protected/, "")
+      .toLowerCase()
       .split("/")
       .filter((p) => !p.includes("_"))
       .filter(Boolean);

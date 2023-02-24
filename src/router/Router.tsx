@@ -12,23 +12,23 @@ const PRESERVED = import.meta.glob(
   { eager: true }
 );
 const ROUTES = import.meta.glob([
-  "/src/screens/**/[a-z[]*.(jsx|tsx)",
-  "!/src/screens/**/[a-z[]*.lazy.(jsx|tsx)",
-  "!/src/screens/**/[a-z[]*.protected.(jsx|tsx)",
+  "/src/screens/**/*.(jsx|tsx)",
+  "!/src/screens/**/*.lazy.(jsx|tsx)",
+  "!/src/screens/**/*.protected.(jsx|tsx)",
 ]);
 const EAGER_ROUTES = import.meta.glob(
   [
-    "/src/screens/**/[a-z[]*.(jsx|tsx)",
-    "!/src/screens/**/[a-z[]*.lazy.(jsx|tsx)",
-    "!/src/screens/**/[a-z[]*.protected.(jsx|tsx)",
+    "/src/screens/**/*.(jsx|tsx)",
+    "!/src/screens/**/*.lazy.(jsx|tsx)",
+    "!/src/screens/**/*.protected.(jsx|tsx)",
   ],
   {
     eager: true,
   }
 );
-const LAZY_ROUTES = import.meta.glob("/src/screens/**/[a-z[]*.lazy.(jsx|tsx)");
+const LAZY_ROUTES = import.meta.glob("/src/screens/**/*.lazy.(jsx|tsx)");
 const PROTECTED_ROUTES = import.meta.glob(
-  "/src/screens/**/[a-z[]*.protected.(jsx|tsx)"
+  "/src/screens/**/*.protected.(jsx|tsx)"
 );
 
 const preserved = Object.keys(PRESERVED).reduce(
