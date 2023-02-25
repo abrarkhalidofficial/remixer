@@ -1,4 +1,4 @@
-import { SvgReact } from "assets";
+import { SvgReact } from "../assets";
 
 export default function Index() {
   return (
