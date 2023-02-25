@@ -1,3 +1,4 @@
+import { ViteAliases } from "vite-aliases";
 import { ViteWebfontDownload } from "vite-plugin-webfont-dl";
 import { chunkSplitPlugin } from "vite-plugin-chunk-split";
 import { defineConfig } from "vite";
@@ -12,6 +13,10 @@ export default defineConfig({
     hotExport(),
     chunkSplitPlugin(),
     ViteWebfontDownload(),
+    ViteAliases({
+      useTypescript: true,
+      useConfig: true,
+    }),
     viteCompression({
       algorithm: "brotliCompress",
       threshold: 100,
