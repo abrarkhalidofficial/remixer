@@ -1,6 +1,6 @@
 import { Footer, Header } from "@components";
 
-import Head from "@router/Head";
+import { Head } from "@router";
 import { Outlet } from "react-router-dom";
 
 export default function App() {
