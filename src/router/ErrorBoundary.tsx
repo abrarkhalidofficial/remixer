@@ -1,6 +1,6 @@
-export const Loader =
+export const ErrorBoundary =
   (routes: any) =>
   async (...args: any) =>
     routes()
-      .then((mod: { loader: any }) => mod?.loader)
+      .then((mod: { Error: any }) => mod?.Error)
       .then((res) => (res === undefined ? null : res?.(...args)));

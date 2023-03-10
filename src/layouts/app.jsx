@@ -1,17 +1,17 @@
-import { Footer, Header } from "../components";
+import { Footer, Header } from "@components";
 
+import Head from "@router/Head";
 import { Outlet } from "react-router-dom";
-
-export const meta = {
-  title: "Remixer",
-  description: "Remixer",
-  image: "/favicon.svg",
-  url: "https://vitefilerouter.com",
-};
 
 export default function App() {
   return (
     <>
+      <Head
+        title="Remixer"
+        image="/favicon.svg"
+        url="https://vitefilerouter.com"
+        description="Remixer"
+      />
       <Header />
       <Outlet />
       <Footer />

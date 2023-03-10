@@ -1,9 +1,7 @@
 import { Fragment, Suspense } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-import Head from "./Head";
-import { meta } from "../layouts/app";
-import routesReducer from "./routesReducer";
+import RoutesReducer from "./RoutesReducer";
 
 import.meta.glob("/src/styles/*.(scss|css)", { eager: true });
 
@@ -39,9 +37,9 @@ const preserved = Object.keys(PRESERVED).reduce(
   }),
   {}
 );
-const eagerRoutes = routesReducer(EAGER_ROUTES, ROUTES);
-const lazyRoutes = routesReducer(null, LAZY_ROUTES);
-const protectedRoutes = routesReducer(null, PROTECTED_ROUTES);
+const eagerRoutes = RoutesReducer(EAGER_ROUTES, ROUTES);
+const lazyRoutes = RoutesReducer(null, LAZY_ROUTES);
+const protectedRoutes = RoutesReducer(null, PROTECTED_ROUTES);
 
 export const getMatchingRoute = (path: string) =>
   lazyRoutes.find(
@@ -70,24 +68,21 @@ const NotFound = preserved?.["notFound"] || Fragment;
 const Loading = preserved?.["loading"] || Fragment;
 const Protected = preserved?.["protected"] || Fragment;
 
-const { title, image, url, description } = meta;
-
 export default function Router() {
   return (
     <Suspense fallback={<Loading />}>
-      <Head title={title} image={image} url={url} description={description} />
       <RouterProvider
         router={createBrowserRouter([
           {
             path: "/",
-            element: <App />,
+            Component: App,
             children: [
               ...eagerRoutes,
               ...lazyRoutes,
-              { path: "", element: <Protected />, children: protectedRoutes },
+              { path: "", Component: Protected, children: protectedRoutes },
             ],
           },
-          { path: "*", element: <NotFound /> },
+          { path: "*", Component: NotFound },
         ])}
       />
     </Suspense>

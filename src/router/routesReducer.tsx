@@ -1,24 +1,20 @@
-import { Fragment, lazy } from "react";
+import { Action } from "./Action";
+import { ErrorBoundary } from "./ErrorBoundary";
+import { Loader } from "./Loader";
+import { lazy } from "react";
 
-import { action } from "./action";
-import { loader } from "./loader";
-
-export default function routesReducer(
+export default function RoutesReducer(
   eagers: Record<string, unknown>,
   lazys: Record<string, () => Promise<unknown>>
 ) {
   return Object.keys(eagers === null ? lazys : eagers).reduce((routes, key) => {
     const module = lazys[key];
 
-    const Component =
-      eagers === null
-        ? lazy(module) || Fragment
-        : eagers[key].default || Fragment;
-
     const route = {
-      element: <Component />,
-      loader: loader(module),
-      action: action(module),
+      Component: eagers === null ? lazy(module) : eagers[key].default,
+      loader: Loader(module),
+      action: Action(module),
+      ErrorBoundary: ErrorBoundary(module),
       preload: module,
     };
 

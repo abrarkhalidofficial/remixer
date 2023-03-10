@@ -1,4 +1,4 @@
-export const action =
+export const Action =
   (routes: any) =>
   async (...args: any) =>
     routes()
