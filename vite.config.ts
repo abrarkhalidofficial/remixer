@@ -14,7 +14,6 @@ export default defineConfig({
     chunkSplitPlugin(),
     ViteWebfontDownload(),
     ViteAliases({
-      useTypescript: true,
       useConfig: true,
     }),
     viteCompression({

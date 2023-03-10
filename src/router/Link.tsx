@@ -3,13 +3,19 @@ import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { getMatchingRoute } from "./LazyRoutes";
 
-interface Props {
-  children: React.ReactNode;
+interface LinkProps
+  extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href"> {
+  replace?: boolean;
+  state?: any;
   to: string;
+  reloadDocument?: boolean;
+  preventScrollReset?: boolean;
+  relative?: "route" | "path";
+  children: React.ReactNode;
   prefetch?: boolean;
 }
 
-const Link = memo(({ children, to, prefetch = true, ...props }: Props) => {
+const Link = memo(({ children, to, prefetch = true, ...props }: LinkProps) => {
   const ref = useRef(null);
   const [prefetched, setPrefetched] = useState(false);
 
