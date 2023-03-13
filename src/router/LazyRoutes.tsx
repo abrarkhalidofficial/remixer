@@ -1,7 +1,8 @@
 import RoutesReducer from "./RoutesReducer";
 
-export const LAZY_ROUTES = import.meta.glob("/src/screens/**/*.lazy.(jsx|tsx)");
+const LAZY_ROUTES = import.meta.glob("/src/screens/**/*.lazy.(jsx|tsx)");
 export const lazyRoutes = RoutesReducer(null, LAZY_ROUTES);
+
 export const getMatchingRoute = (path: string) =>
   lazyRoutes.find(
     (route) =>
