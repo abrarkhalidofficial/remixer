@@ -45,11 +45,8 @@
             "@/*": [
                 "src/*"
             ],
-            "@shared/*": [
-                "src/shared/*"
-            ],
-            "@lib/*": [
-                "src/lib/*"
+            "@pages/*": [
+                "src/pages/*"
             ]
         }
     },
