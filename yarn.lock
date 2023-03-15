@@ -3410,6 +3410,11 @@ vite-plugin-imagemin@^0.6.1:
     jpegtran-bin "^6.0.1"
     pathe "^0.2.0"
 
+vite-plugin-remove-console@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/vite-plugin-remove-console/-/vite-plugin-remove-console-2.1.0.tgz#47f19fff9096f459f2cfc55a149a25024b691d73"
+  integrity sha512-cil+h4rX3fDnnKMt73fexMGkwRSOV08+lTAzLGTRjGyxs9Ync3fqPWxnGrngJY7LyMMt3kEKf0hNOi+1DQ0j2g==
+
 vite-plugin-webfont-dl@^3.6.1:
   version "3.6.1"
   resolved "https://registry.yarnpkg.com/vite-plugin-webfont-dl/-/vite-plugin-webfont-dl-3.6.1.tgz#cd9ade447951571b8caa00f55450371498548ef9"
