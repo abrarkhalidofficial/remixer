@@ -3,6 +3,7 @@ import { ViteWebfontDownload } from "vite-plugin-webfont-dl";
 import { chunkSplitPlugin } from "vite-plugin-chunk-split";
 import { defineConfig } from "vite";
 import hotExport from "vite-plugin-hot-export";
+import preload from "vite-plugin-preload";
 import react from "@vitejs/plugin-react";
 import removeConsole from "vite-plugin-remove-console";
 import viteCompression from "vite-plugin-compression";
@@ -11,6 +12,7 @@ import viteImagemin from "vite-plugin-imagemin";
 export default defineConfig({
   plugins: [
     react(),
+    preload(),
     hotExport(),
     removeConsole(),
     chunkSplitPlugin(),
