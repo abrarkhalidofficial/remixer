@@ -45,8 +45,8 @@
             "@/*": [
                 "src/*"
             ],
-            "@pages/*": [
-                "src/pages/*"
+            "@about/*": [
+                "src/screens/about/*"
             ]
         }
     },

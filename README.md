@@ -2,7 +2,7 @@
 
 ## Description
 
-A starter for react apps to make development faster it has file based routing, flaten routes, lazy routes, protected routes, nested routes, asset optimization, auto component & asset export, auto style imports for sass or css, prefetching support, head component
+A starter for react apps to make development faster it has file based routing, flaten routes, lazy routes, nested routes, asset optimization, auto component & asset export, auto style imports for sass or css, prefetching support, head component
 
 just wanted to make nextjs like features but liked remix styles better so here it is 💖
 

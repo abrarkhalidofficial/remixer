@@ -23,7 +23,6 @@ export default function RoutesReducer(
       .replace(/\[\.{3}.+\]/, "*")
       .replace(/\[(.+)\]/, ":$1")
       .replace(/\.lazy/, "")
-      .replace(/\.protected/, "")
       .toLowerCase()
       .split("/")
       .filter((p) => !p.includes("_"))
