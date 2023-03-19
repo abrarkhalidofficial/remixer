@@ -1,6 +1,6 @@
 {
   "files.exclude": {
-    // "**/router": true,
+    "**/router": true,
     "**/main.tsx": true,
     "**/vite.d.ts": true,
     "**/index.ts": true,
@@ -8,7 +8,7 @@
     "**/LICENSE": true,
     "**/public": true,
     "**/tsconfig.json": true,
-    // "**/vite.config.ts": true,
+    "**/vite.config.ts": true,
     "**/export.config.ts": true,
     "**/postcss.config.js": true
   }
