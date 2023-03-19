@@ -1,6 +1,7 @@
 import { Await, Form, useLocation, useNavigate } from "react-router-dom";
 
 import Head from "./Head";
+import Img from "./Img";
 import Link from "./Link";
 import NavLink from "./NavLink";
 import Outlet from "./Outlet";
@@ -15,6 +16,7 @@ export {
   Outlet,
   Router,
   NavLink,
+  Img,
   useNavigate,
   useLocation,
   SuspenseAfterInitialRender,
