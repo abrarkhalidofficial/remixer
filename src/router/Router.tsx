@@ -2,8 +2,8 @@ import { App, Loading, NotFound } from "./Preserved";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import { Suspense } from "react";
-import { eagerRoutes } from "./EagerRoutes";
-import { lazyRoutes } from "./LazyRoutes";
+import eagerRoutes from "./EagerRoutes";
+import lazyRoutes from "./LazyRoutes";
 
 import.meta.glob("/src/styles/*.(scss|css)", { eager: true });
 

@@ -1,6 +1,6 @@
-import { Action } from "./Action";
-import { ErrorBoundary } from "./ErrorBoundary";
-import { Loader } from "./Loader";
+import Action from "./Action";
+import ErrorBoundary from "./ErrorBoundary";
+import Loader from "./Loader";
 import { lazy } from "react";
 
 export default function RoutesReducer(

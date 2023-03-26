@@ -1,5 +1,4 @@
-export const ErrorBoundary =
-  (routes: any) =>
+export default (routes: any) =>
   async (...args: any) =>
     routes()
       .then((mod: { Error: any }) => mod?.Error)

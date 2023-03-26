@@ -1,5 +1,7 @@
-import { Footer, Header } from "@components";
-import { Head, Outlet } from "@router";
+import Footer from "@components/Footer";
+import Head from "@router/Head";
+import Header from "@components/Header";
+import Outlet from "@router/Outlet";
 
 export default function App() {
   return (

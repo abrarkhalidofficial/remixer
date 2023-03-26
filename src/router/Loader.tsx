@@ -1,5 +1,4 @@
-export const Loader =
-  (routes: any) =>
+export default (routes: any) =>
   async (...args: any) =>
     routes()
       .then((mod: { loader: any }) => mod?.loader)

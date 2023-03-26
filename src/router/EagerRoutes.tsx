@@ -11,4 +11,4 @@ const EAGER_ROUTES = import.meta.glob(
   }
 );
 
-export const eagerRoutes = RoutesReducer(EAGER_ROUTES, ROUTES);
+export default RoutesReducer(EAGER_ROUTES, ROUTES);

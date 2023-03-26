@@ -1,7 +1,7 @@
 {
   "files.exclude": {
-    "**/router": true,
-    "**/main.tsx": true,
+    // "**/router": true,
+    // "**/main.tsx": true,
     "**/vite.d.ts": true,
     "**/index.ts": true,
     "**/index.html": true,

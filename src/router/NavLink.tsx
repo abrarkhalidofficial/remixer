@@ -1,7 +1,7 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { NavLink as RouterLink } from "react-router-dom";
-import { getMatchingRoute } from "./LazyRoutes";
+import { getMatchingRoute } from "./GetMatchingRoute";
 
 interface LinkProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href"> {
