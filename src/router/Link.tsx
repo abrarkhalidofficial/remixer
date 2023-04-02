@@ -1,50 +1,49 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
-
 import { Link as RouterLink } from "react-router-dom";
 import { getMatchingRoute } from "./GetMatchingRoute";
 
 interface LinkProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href"> {
-  replace?: boolean;
-  state?: any;
   to: string;
-  reloadDocument?: boolean;
-  preventScrollReset?: boolean;
-  relative?: "route" | "path";
-  children: React.ReactNode;
   prefetch?: boolean;
 }
 
-const Link = memo(({ children, to, prefetch = true, ...props }: LinkProps) => {
-  const ref = useRef(null);
+const Link = memo(({ to, prefetch = true, ...props }: LinkProps) => {
+  const ref = useRef<HTMLAnchorElement>(null);
   const [prefetched, setPrefetched] = useState(false);
 
   const route = useMemo(() => getMatchingRoute(to), [to]);
-  const preload = useCallback(
-    () => route?.preload() && setPrefetched(true),
-    [route]
+  const preload = useCallback(() => {
+    route?.preload();
+    setPrefetched(true);
+  }, [route]);
+
+  const prefetchable = useMemo(
+    () => Boolean(route && !prefetched),
+    [route, prefetched]
   );
-  const prefetchable = Boolean(route && !prefetched);
 
   useEffect(() => {
-    if (prefetchable && prefetch && ref?.current) {
-      const observer = new IntersectionObserver(
-        (entries) =>
-          entries.forEach((entry) => entry.isIntersecting && preload()),
-        { rootMargin: "200px" }
-      );
+    if (!prefetchable || !prefetch || !ref?.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          preload();
+          observer.unobserve(ref.current!);
+        }
+      },
+      { rootMargin: "200px" }
+    );
+    observer.observe(ref.current!);
+    return () => observer.disconnect();
+  }, [prefetchable, prefetch, ref, preload]);
 
-      observer.observe(ref.current);
-      return () => observer.disconnect();
-    }
-  }, [prefetch, prefetchable, preload]);
-
-  const handleMouseEnter = () => prefetchable && preload();
+  const handleMouseEnter = useCallback(() => {
+    if (prefetchable) preload();
+  }, [prefetchable, preload]);
 
   return (
-    <RouterLink ref={ref} to={to} onMouseEnter={handleMouseEnter} {...props}>
-      {children}
-    </RouterLink>
+    <RouterLink ref={ref} to={to} onMouseEnter={handleMouseEnter} {...props} />
   );
 });
 

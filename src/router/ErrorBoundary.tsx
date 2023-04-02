@@ -1,5 +1,4 @@
-export default (routes: any) =>
-  async (...args: any) =>
-    routes()
-      .then((mod: { Error: any }) => mod?.Error)
-      .then((res) => (res === undefined ? null : res?.(...args)));
+export default (routes: any) => async (...args: any) => {
+  const { Error } = await routes();
+  return Error ? Error(...args) : null;
+};

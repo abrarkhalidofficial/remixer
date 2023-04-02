@@ -1,25 +1,37 @@
-import { ViteAliases } from "vite-aliases";
 import { ViteWebfontDownload } from "vite-plugin-webfont-dl";
 import { chunkSplitPlugin } from "vite-plugin-chunk-split";
 import { defineConfig } from "vite";
-import hotExport from "vite-plugin-hot-export";
 import preload from "vite-plugin-preload";
 import react from "@vitejs/plugin-react";
-import removeConsole from "vite-plugin-remove-console";
 import viteCompression from "vite-plugin-compression";
 import viteImagemin from "vite-plugin-imagemin";
 
 export default defineConfig({
+  resolve: {
+    alias: [
+      {
+        find: "@",
+        replacement: "/src",
+      },
+      {
+        find: "@components",
+        replacement: "/src/components",
+      },
+      {
+        find: "@assets",
+        replacement: "/src/assets",
+      },
+      {
+        find: "@router",
+        replacement: "/src/router",
+      },
+    ],
+  },
   plugins: [
     react(),
     preload(),
-    hotExport(),
-    removeConsole(),
     chunkSplitPlugin(),
     ViteWebfontDownload(),
-    ViteAliases({
-      useConfig: true,
-    }),
     viteCompression({
       algorithm: "brotliCompress",
       threshold: 100,

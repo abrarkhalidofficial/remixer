@@ -1,5 +1,4 @@
-export default (routes: any) =>
-  async (...args: any) =>
-    routes()
-      .then((mod: { loader: any }) => mod?.loader)
-      .then((res) => (res === undefined ? null : res?.(...args)));
+export default (routes: any) => async (...args: any) => {
+  const { loader } = await routes();
+  return loader ? loader(...args) : null;
+};

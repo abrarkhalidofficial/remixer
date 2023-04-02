@@ -1,4 +1,4 @@
-import { Suspense, memo, useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 interface Props {
   fallback: React.ReactNode;
@@ -9,26 +9,13 @@ export default function SuspenseAfterInitialRender({
   fallback,
   children,
 }: Props) {
-  let [isInitialRender, setIsInitialRender] = useState(true);
+  const [isInitialRender, setIsInitialRender] = useState(true);
 
-  return isInitialRender ? (
-    <>
-      <Lifecycle afterRender={() => setIsInitialRender(false)} />
-      {children}
-    </>
-  ) : (
-    <Suspense fallback={fallback}>{children}</Suspense>
-  );
-}
-
-interface LifecycleProps {
-  afterRender: () => void;
-}
-
-const Lifecycle = memo<LifecycleProps>(({ afterRender }) => {
   useEffect(() => {
-    afterRender();
-  }, [afterRender]);
+    setIsInitialRender(false);
+  }, []);
 
-  return null;
-});
+  if (isInitialRender) return children;
+
+  return <Suspense fallback={fallback}>{children}</Suspense>;
+}
