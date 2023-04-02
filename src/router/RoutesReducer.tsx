@@ -1,5 +1,5 @@
 import Action from "./Action";
-import ErrorBoundary from "./ErrorBoundary";
+import ErrorBoundaryLoad from "./ErrorBoundary";
 import Loader from "./Loader";
 import { lazy } from "react";
 
@@ -10,12 +10,20 @@ export default function RoutesReducer(
   return Object.keys(eagers === null ? lazys : eagers).reduce((routes, key) => {
     const module = lazys[key];
 
+    const Component = eagers === null ? lazy(module) : eagers[key].default;
+    const loader = eagers === null ? Loader(module) : eagers[key].loader;
+    const action = eagers === null ? Action(module) : eagers[key].action;
+    const ErrorBoundary =
+      eagers === null ? ErrorBoundaryLoad(module) : eagers[key].Error;
+
+    const preload = eagers === null ? module : null;
+
     const route = {
-      Component: eagers === null ? lazy(module) : eagers[key].default,
-      loader: Loader(module),
-      action: Action(module),
-      ErrorBoundary: ErrorBoundary(module),
-      preload: module,
+      Component,
+      loader,
+      action,
+      ErrorBoundary,
+      preload,
     };
 
     const segments = key
