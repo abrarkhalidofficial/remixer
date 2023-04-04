@@ -15,7 +15,7 @@ export default function SuspenseAfterInitialRender({
     setIsInitialRender(false);
   }, []);
 
-  if (isInitialRender) return children;
+  if (isInitialRender) return <>{children}</>;
 
   return <Suspense fallback={fallback}>{children}</Suspense>;
 }
