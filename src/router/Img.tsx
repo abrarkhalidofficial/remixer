@@ -3,7 +3,7 @@ import useImage from "./useImage";
 interface ImgProps
   extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, "src"> {
   src: string;
-  suspense: boolean;
+  suspense?: boolean;
 }
 
 export default function Img({ src, suspense = false, ...props }: ImgProps) {
