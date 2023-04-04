@@ -8,15 +8,16 @@ export default function RoutesReducer(
   lazys: Record<string, () => Promise<unknown>>
 ) {
   return Object.keys(eagers === null ? lazys : eagers).reduce((routes, key) => {
-    const module = lazys[key];
+    const lazyModule = lazys[key];
+    const eagerModule = eagers[key];
 
-    const Component = eagers === null ? lazy(module) : eagers[key].default;
-    const loader = eagers === null ? Loader(module) : eagers[key].loader;
-    const action = eagers === null ? Action(module) : eagers[key].action;
+    const Component = eagers === null ? lazy(lazyModule) : eagerModule.default;
+    const loader = eagers === null ? Loader(lazyModule) : eagerModule.loader;
+    const action = eagers === null ? Action(lazyModule) : eagerModule.action;
     const ErrorBoundary =
-      eagers === null ? ErrorBoundaryLoad(module) : eagers[key].Error;
+      eagers === null ? ErrorBoundaryLoad(lazyModule) : eagerModule.Error;
 
-    const preload = eagers === null ? module : null;
+    const preload = eagers === null ? lazyModule : null;
 
     const route = {
       Component,
