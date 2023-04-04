@@ -1,15 +1,15 @@
-import Helmet from "react-helmet";
-import { memo } from "react";
+import { Helmet } from "react-helmet";
+import { ReactNode, memo } from "react";
 
-interface Props {
+interface HeadProps {
   title: string;
   description: string;
   url: string;
   image: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
-const Head = memo(({ title, description, url, image, children }: Props) => {
+const Head = memo(({ title, description, url, image, children }: HeadProps) => {
   return (
     <Helmet>
       <title>{title}</title>
