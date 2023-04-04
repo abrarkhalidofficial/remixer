@@ -7,8 +7,7 @@ import lazyRoutes from "./LazyRoutes";
 
 import.meta.glob("/src/styles/*.(scss|css)", { eager: true });
 
-if (lazyRoutes.length === 0 && eagerRoutes.length === 0)
-  console.error("No routes found");
+if (!lazyRoutes.length && !eagerRoutes.length) console.error("No routes found");
 
 export default function Router() {
   return (
