@@ -1,13 +1,22 @@
-// returns a Promisized version of Image() api
-export default ({ decode = true, crossOrigin = "" }) =>
-  (src): Promise<void> => {
-    return new Promise((resolve, reject) => {
-      const i = new Image();
-      if (crossOrigin) i.crossOrigin = crossOrigin;
-      i.onload = () => {
-        decode && i.decode ? i.decode().then(resolve).catch(reject) : resolve();
+export default function createPromiseImage({ decode = true, crossOrigin = "" }) {
+  return function (src: string) {
+    const img = new Image();
+
+    if (crossOrigin) {
+      img.crossOrigin = crossOrigin;
+    }
+
+    return new Promise<void>((resolve, reject) => {
+      img.onload = () => {
+        if (decode && img.decode) {
+          img.decode().then(resolve).catch(reject);
+        } else {
+          resolve();
+        }
       };
-      i.onerror = reject;
-      i.src = src;
+
+      img.onerror = reject;
+      img.src = src;
     });
-  };
+  }
+}
