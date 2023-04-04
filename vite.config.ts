@@ -81,9 +81,9 @@ export default defineConfig({
     }),
     react(),
   ],
-
   build: {
     // Minify output with terser
+    cssCodeSplit: true,
     minify: true,
     rollupOptions: {
       plugins: [terser()],
